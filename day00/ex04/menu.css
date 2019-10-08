@@ -1,0 +1,50 @@
+#main {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 98vh;
+}
+
+a.item {
+  padding: 0.25rem 0.5rem;
+  background: #bbb;
+  border: 1px solid #000;
+  border-bottom: none;
+  text-decoration: none;
+}
+
+.item:last-of-type {
+  border-bottom: 1px solid #000;
+}
+
+a.item:hover {
+  cursor: pointer;
+  background: #999;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown > .dropdown-inside {
+  display: none;
+}
+
+.dropdown:hover > .dropdown-inside {
+  display: grid;
+}
+
+.dropdown-inside {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  display: grid;
+}
+
+.dropdown-inside .item {
+  background: #aaa;
+}
+
+.dropdown-inside .item:hover {
+  background: #888;
+}
