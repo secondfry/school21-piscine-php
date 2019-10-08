@@ -5,6 +5,7 @@ const state = {
       changeRoom('serega.jpg');
     },
     golden: function () {
+      loseItem('slack', '');
       changeRoom('win.jpg');
     },
   },
@@ -179,6 +180,12 @@ $('.item-icon').click(function (e) {
   $('.item-icon').removeClass('selected');
   $(this).addClass('selected');
   state.selected = $(this).data('id');
+});
+
+$('#disconnect').click(function (e) {
+  e.preventDefault();
+  alert('В большинстве современных браузеров вам придется закрыть вкладку вручную.');
+  window.close();
 });
 
 changeRoom('main_01.jpg');
