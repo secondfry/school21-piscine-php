@@ -9,8 +9,8 @@
         <img id="loupe" src="resources/loupe.png">
       </div>
       <div id="controls-wrap">
-        <a class="no" href="www.disney.com"><img class="header-control" src="resources/reload.png" alt="Start from the beginning"></a>
-        <a class="no" href="www.relaischateaux.com"><img class="header-control" src="resources/close.gif" alt="Disconnect"></a>
+        <a class="no" href="http://www.disney.com"><img class="header-control" src="resources/reload.png" alt="Start from the beginning"></a>
+        <a class="no" href="http://www.relaischateaux.com"><img class="header-control" src="resources/close.gif" alt="Disconnect"></a>
       </div>
     </div>
   </header>
@@ -24,7 +24,11 @@
       <div id="action-selected"></div>
     </div>
     <div id="main">
-      <img id="main-image" src="resources/cluster.jpg" alt="Main room">
+      <img id="main-image" src="resources/cluster.jpg" alt="Main room" usemap="#main-map">
+      <map name="main-map">
+        <area shape="rect" coords="304,304,466,466" href="http://www.ikea.com" alt="IKEA">
+        <area shape="rect" coords="780,304,990,466" href="http://www.apple.com" alt="iMac">
+      </map>
     </div>
     <div id="right">
       <img class="item-icon" id="item-passport" src="resources/book.png" alt="Passport">
