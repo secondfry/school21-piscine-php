@@ -7,7 +7,7 @@ if ($argc < 2)
 }
 
 $arr = explode(' ', $argv[1]);
-$arr = array_filter($arr);
+$arr = array_filter($arr, function ($x) { return $x !== ''; });
 array_push($arr, array_shift($arr));
 $str = implode(' ', $arr);
 echo $str . "\n";
