@@ -9,20 +9,35 @@
         <img id="loupe" src="resources/loupe.png">
       </div>
       <div id="controls-wrap">
-        <img class="header-control" src="resources/reload.png">
-        <img class="header-control" src="resources/close.gif">
+        <a class="no" href="www.disney.com"><img class="header-control" src="resources/reload.png" alt="Start from the beginning"></a>
+        <a class="no" href="www.relaischateaux.com"><img class="header-control" src="resources/close.gif" alt="Disconnect"></a>
       </div>
     </div>
   </header>
   <div id="main-wrap">
     <div id="left">
-      left
+      <img class="action-icon" id="action-advance" src="resources/arrow.png" alt="Advance">
+      <img class="action-icon" id="action-take" src="resources/main.png" alt="Take">
+      <img class="action-icon" id="action-look" src="resources/oeil.png" alt="Look">
+      <img class="action-icon" id="action-use" src="resources/outil.png" alt="Use">
+      <img class="action-icon" id="action-speak" src="resources/chat-icon.png" alt="Speak">
+      <div id="action-selected"></div>
     </div>
     <div id="main">
-      main
+      <img id="main-image" src="resources/cluster.jpg" alt="Main room">
     </div>
     <div id="right">
-      right
+      <img class="item-icon" id="item-passport" src="resources/book.png" alt="Passport">
+      <img class="item-icon" id="item-towel" src="resources/towel.png" alt="Towel">
+      <div class="no item-icon" id="item-wall" title="Wall"></div>
+    </div>
+    <div id="action">
+      Vous <span class="text-big">entrez</span> alors dans une grande piece remplie<br>
+      <span class="text-blood">d'ordinateurs</span>...<br>
+      <i id="question">- Bonjour, vous êtes nouveau ici ?</i>
+      <form action="#">
+        <input type="text" id="action-answer"><button id="action-button">Repondre</button>
+      </form>
     </div>
   </div>
 </div>
