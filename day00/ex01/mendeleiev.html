@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style>
+#body {
+  margin: 0;
+}
+
+#logo-wrap {
+  margin: 1em auto;
+  text-align: center;
+  max-width: 200px;
+}
+#logo {
+  max-width: 100%;
+  height: auto;
+}
+
+#table {
+  border-spacing: 1px;
+  display: block;
+  overflow: auto;
+  width: 100%;
+  margin: 0 !important;
+
+  font-size: 10px;
+}
+#table small, .cell-asterisk {
+  font-size: 4px;
+}
+
+@media (min-width: 321px) {
+  #table {
+    font-size: 12px;
+  }
+  #table small, .cell-asterisk {
+    font-size: 5px;
+  }
+}
+
+@media (min-width: 376px) {
+  #table {
+    font-size: 13px;
+  }
+  #table small, .cell-asterisk {
+    font-size: 6px;
+  }
+}
+
+@media (min-width: 415px) {
+  #table {
+    font-size: initial;
+  }
+  #table small, .cell-asterisk {
+    font-size: smaller;
+  }
+}
+
+.cell {
+  width: 5%;
+}
+.cell-odd {
+  background: #e8e8e8;
+}
+.cell-even {
+  background: #f0f0f0;
+}
+.cell-space {
+  width: 1%;
+}
+.cell-weight {
+  display: block;
+  text-align: right;
+}
+.cell-item {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+.cell-number {
+  display: block;
+  text-align: left;
+}
+</style>
+</head>
+<body id="body">
+<div id="logo-wrap">
+  <img id="logo" alt="Dmitrii Mendeleev"
+       src="https://upload.wikimedia.org/wikipedia/commons/c/c8/DIMendeleevCab.jpg">
+</div>
+<table id="table" contenteditable="true">
+<thead>
+<tr>
+  <th class="cell-space"></th>
+  <th class="cell cell-odd"><abbr title="Alkali metals">1</abbr></th>
+  <th class="cell cell-even"><abbr title="Alkaline earth metals">2</abbr></th>
+  <th class="cell cell-odd">3</th>
+  <th class="cell-space"></th>
+  <th class="cell cell-even">4</th>
+  <th class="cell cell-odd">5</th>
+  <th class="cell cell-even">6</th>
+  <th class="cell cell-odd">7</th>
+  <th class="cell cell-even">8</th>
+  <th class="cell cell-odd">9</th>
+  <th class="cell cell-even">10</th>
+  <th class="cell cell-odd">11</th>
+  <th class="cell cell-even">12</th>
+  <th class="cell cell-odd">13</th>
+  <th class="cell cell-even">14</th>
+  <th class="cell cell-odd"><abbr title="Pnictogens">15</abbr></th>
+  <th class="cell cell-even"><abbr title="Chalcogens">16</abbr></th>
+  <th class="cell cell-odd"><abbr title="Halogens">17</abbr></th>
+  <th class="cell cell-even"><abbr title="Noble gases">18</abbr></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <th>1</th>
+  <td style="background: #f0ff8f;"><small class="cell-weight">1.008</small><span class="cell-item">H</span><small class="cell-number">1</small></td>
+  <td colspan="17"></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">4.0026</small><span class="cell-item">He</span><small class="cell-number">2</small></td>
+</tr>
+<tr>
+  <th>2</th>
+  <td style="background: #ff6666;"><small class="cell-weight">6.94</small><span class="cell-item">Li</span><small class="cell-number">3</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">9.0122</small><span class="cell-item">Be</span><small class="cell-number">4</small></td>
+  <td colspan="11"></td>
+  <td style="background: #cccc99;"><small class="cell-weight">10.81</small><span class="cell-item">B</span><small class="cell-number">5</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">12.011</small><span class="cell-item">C</span><small class="cell-number">6</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">14.007</small><span class="cell-item">N</span><small class="cell-number">7</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">15.999</small><span class="cell-item">O</span><small class="cell-number">8</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">18.998</small><span class="cell-item">F</span><small class="cell-number">9</small></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">20.180</small><span class="cell-item">Ne</span><small class="cell-number">10</small></td></tr>
+<tr>
+  <th>3</th>
+  <td style="background: #ff6666;"><small class="cell-weight">22.990</small><span class="cell-item">Na</span><small class="cell-number">11</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">24.305</small><span class="cell-item">Mg</span><small class="cell-number">12</small></td>
+  <td colspan="11"></td>
+  <td style="background: #cccccc;"><small class="cell-weight">26.982</small><span class="cell-item">Al</span><small class="cell-number">13</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">28.085</small><span class="cell-item">Si</span><small class="cell-number">14</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">30.974</small><span class="cell-item">P</span><small class="cell-number">15</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">32.06</small><span class="cell-item">S</span><small class="cell-number">16</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">35.45</small><span class="cell-item">Cl</span><small class="cell-number">17</small></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">39.88</small><span class="cell-item">Ar</span><small class="cell-number">18</small></td></tr>
+<tr>
+  <th>4</th>
+  <td style="background: #ff6666;"><small class="cell-weight">39.098</small><span class="cell-item">K</span><small class="cell-number">19</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">40.078</small><span class="cell-item">Ca</span><small class="cell-number">20</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">44.956</small><span class="cell-item">Sc</span><small class="cell-number">21</small></td>
+  <td>
+</td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">47.867</small><span class="cell-item">Ti</span><small class="cell-number">22</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">50.942</small><span class="cell-item">V</span><small class="cell-number">23</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">51.996</small><span class="cell-item">Cr</span><small class="cell-number">24</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">54.938</small><span class="cell-item">Mn</span><small class="cell-number">25</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">55.845</small><span class="cell-item">Fe</span><small class="cell-number">26</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">58.933</small><span class="cell-item">Co</span><small class="cell-number">27</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">58.693</small><span class="cell-item">Ni</span><small class="cell-number">28</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">63.546</small><span class="cell-item">Cu</span><small class="cell-number">29</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">65.38</small><span class="cell-item">Zn</span><small class="cell-number">30</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">69.723</small><span class="cell-item">Ga</span><small class="cell-number">31</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">72.630</small><span class="cell-item">Ge</span><small class="cell-number">32</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">74.922</small><span class="cell-item">As</span><small class="cell-number">33</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">78.971</small><span class="cell-item">Se</span><small class="cell-number">34</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">79.904</small><span class="cell-item">Br</span><small class="cell-number">35</small></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">83.798</small><span class="cell-item">Kr</span><small class="cell-number">36</small></td></tr>
+<tr>
+  <th>5</th>
+  <td style="background: #ff6666;"><small class="cell-weight">85.468</small><span class="cell-item">Rb</span><small class="cell-number">37</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">87.62</small><span class="cell-item">Sr</span><small class="cell-number">38</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">88.906</small><span class="cell-item">Y</span><small class="cell-number">39</small></td>
+  <td>
+</td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">91.224</small><span class="cell-item">Zr</span><small class="cell-number">40</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">92.906</small><span class="cell-item">Nb</span><small class="cell-number">41</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">95.95</small><span class="cell-item">Mo</span><small class="cell-number">42</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[97]</small><span class="cell-item">Tc</span><small class="cell-number">43</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">101.07</small><span class="cell-item">Ru</span><small class="cell-number">44</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">102.91</small><span class="cell-item">Rh</span><small class="cell-number">45</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">106.42</small><span class="cell-item">Pd</span><small class="cell-number">46</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">107.87</small><span class="cell-item">Ag</span><small class="cell-number">47</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">112.41</small><span class="cell-item">Cd</span><small class="cell-number">48</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">114.82</small><span class="cell-item">In</span><small class="cell-number">49</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">118.71</small><span class="cell-item">Sn</span><small class="cell-number">50</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">121.76</small><span class="cell-item">Sb</span><small class="cell-number">51</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">127.60</small><span class="cell-item">Te</span><small class="cell-number">52</small></td>
+  <td style="background: #f0ff8f;"><small class="cell-weight">126.90</small><span class="cell-item">I</span><small class="cell-number">53</small></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">131.29</small><span class="cell-item">Xe</span><small class="cell-number">54</small></td></tr>
+<tr>
+  <th>6</th>
+  <td style="background: #ff6666;"><small class="cell-weight">132.91</small><span class="cell-item">Cs</span><small class="cell-number">55</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">137.33</small><span class="cell-item">Ba</span><small class="cell-number">56</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">138.91</small><span class="cell-item">La</span><small class="cell-number">57</small></td>
+  <td class="cell-asterisk">*</td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">178.49</small><span class="cell-item">Hf</span><small class="cell-number">72</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">180.95</small><span class="cell-item">Ta</span><small class="cell-number">73</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">183.84</small><span class="cell-item">W</span><small class="cell-number">74</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">186.21</small><span class="cell-item">Re</span><small class="cell-number">75</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">190.23</small><span class="cell-item">Os</span><small class="cell-number">76</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">192.22</small><span class="cell-item">Ir</span><small class="cell-number">77</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">195.08</small><span class="cell-item">Pt</span><small class="cell-number">78</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">196.97</small><span class="cell-item">Au</span><small class="cell-number">79</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">200.59</small><span class="cell-item">Hg</span><small class="cell-number">80</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">204.38</small><span class="cell-item">Tl</span><small class="cell-number">81</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">207.2</small><span class="cell-item">Pb</span><small class="cell-number">82</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">208.98</small><span class="cell-item">Bi</span><small class="cell-number">83</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">[209]</small><span class="cell-item">Po</span><small class="cell-number">84</small></td>
+  <td style="background: #cccc99;"><small class="cell-weight">[210]</small><span class="cell-item">At</span><small class="cell-number">85</small></td>
+  <td style="background: #c0ffff;"><small class="cell-weight">[222]</small><span class="cell-item">Rn</span><small class="cell-number">86</small></td></tr>
+<tr>
+  <th>7</th>
+  <td style="background: #ff6666;"><small class="cell-weight">[223]</small><span class="cell-item">Fr</span><small class="cell-number">87</small></td>
+  <td style="background: #ffdead;"><small class="cell-weight">[226]</small><span class="cell-item">Ra</span><small class="cell-number">88</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[227]</small><span class="cell-item">Ac</span><small class="cell-number">89</small></td>
+  <td class="cell-asterisk">**</td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[267]</small><span class="cell-item">Rf</span><small class="cell-number">104</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[268]</small><span class="cell-item">Db</span><small class="cell-number">105</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[269]</small><span class="cell-item">Sg</span><small class="cell-number">106</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[270]</small><span class="cell-item">Bh</span><small class="cell-number">107</small></td>
+  <td style="background: #ffc0c0;"><small class="cell-weight">[269]</small><span class="cell-item">Hs</span><small class="cell-number">108</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[278]</small><span class="cell-item">Mt</span><small class="cell-number">109</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[281]</small><span class="cell-item">Ds</span><small class="cell-number">110</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[282]</small><span class="cell-item">Rg</span><small class="cell-number">111</small></td>
+  <td style="background: #cccccc;"><small class="cell-weight">[285]</small><span class="cell-item">Cn</span><small class="cell-number">112</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[286]</small><span class="cell-item">Nh</span><small class="cell-number">113</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[289]</small><span class="cell-item">Fl</span><small class="cell-number">114</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[290]</small><span class="cell-item">Mc</span><small class="cell-number">115</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[293]</small><span class="cell-item">Lv</span><small class="cell-number">116</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[294]</small><span class="cell-item">Ts</span><small class="cell-number">117</small></td>
+  <td style="background: #e8e8e8;"><small class="cell-weight">[294]</small><span class="cell-item">Og</span><small class="cell-number">118</small></td></tr>
+<tr>
+  <td colspan="20" style="height:1.4em;"></td>
+</tr>
+<tr>
+  <td colspan="4"></td>
+  <td class="cell-asterisk">*</td>
+  <td style="background: #ffbfff;"><small class="cell-weight">140.12</small><span class="cell-item">Ce</span><small class="cell-number">58</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">140.91</small><span class="cell-item">Pr</span><small class="cell-number">59</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">144.24</small><span class="cell-item">Nd</span><small class="cell-number">60</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">[145]</small><span class="cell-item">Pm</span><small class="cell-number">61</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">150.36</small><span class="cell-item">Sm</span><small class="cell-number">62</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">151.96</small><span class="cell-item">Eu</span><small class="cell-number">63</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">157.25</small><span class="cell-item">Gd</span><small class="cell-number">64</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">158.93</small><span class="cell-item">Tb</span><small class="cell-number">65</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">162.50</small><span class="cell-item">Dy</span><small class="cell-number">66</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">164.93</small><span class="cell-item">Ho</span><small class="cell-number">67</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">167.26</small><span class="cell-item">Er</span><small class="cell-number">68</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">168.93</small><span class="cell-item">Tm</span><small class="cell-number">69</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">173.05</small><span class="cell-item">Yb</span><small class="cell-number">70</small></td>
+  <td style="background: #ffbfff;"><small class="cell-weight">174.97</small><span class="cell-item">Lu</span><small class="cell-number">71</small></td>
+  <td></td>
+</tr>
+<tr>
+  <td colspan="4"></td>
+  <td class="cell-asterisk">**</td>
+  <td style="background: #ff99cc;"><small class="cell-weight">232.04</small><span class="cell-item">Th</span><small class="cell-number">90</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">231.04</small><span class="cell-item">Pa</span><small class="cell-number">91</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">238.03</small><span class="cell-item">U</span><small class="cell-number">92</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[237]</small><span class="cell-item">Np</span><small class="cell-number">93</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[244]</small><span class="cell-item">Pu</span><small class="cell-number">94</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[243]</small><span class="cell-item">Am</span><small class="cell-number">95</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[247]</small><span class="cell-item">Cm</span><small class="cell-number">96</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[247]</small><span class="cell-item">Bk</span><small class="cell-number">97</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[251]</small><span class="cell-item">Cf</span><small class="cell-number">98</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[252]</small><span class="cell-item">Es</span><small class="cell-number">99</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[257]</small><span class="cell-item">Fm</span><small class="cell-number">100</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[258]</small><span class="cell-item">Md</span><small class="cell-number">101</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[259]</small><span class="cell-item">No</span><small class="cell-number">102</small></td>
+  <td style="background: #ff99cc;"><small class="cell-weight">[266]</small><span class="cell-item">Lr</span><small class="cell-number">103</small></td>
+</tr>
+</tbody>
+</table>
+</body>
