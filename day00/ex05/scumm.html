@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+
+<body class="bg-dark">
+<header id="header">
+  <span id="title">День&nbsp;в&nbsp;Школе&nbsp;21</span>
+  <div id="header-controls">
+    <div id="loupe-wrap">
+      <img id="loupe" src="resources/loupe.png">
+    </div>
+    <div id="controls-wrap">
+      <a class="no" href="http://www.disney.com"><img class="header-control" src="resources/reload.png" alt="Start from the beginning"></a>
+      <a class="no" href="http://www.relaischateaux.com"><img class="header-control" src="resources/close.gif" alt="Disconnect"></a>
+    </div>
+  </div>
+</header>
+
+<div id="main-wrap">
+  <div id="left">
+    <img class="action-icon" id="action-advance" src="resources/arrow.png" alt="Advance">
+    <img class="action-icon" id="action-take" src="resources/main.png" alt="Take">
+    <img class="action-icon" id="action-look" src="resources/oeil.png" alt="Look">
+    <img class="action-icon" id="action-use" src="resources/outil.png" alt="Use">
+    <img class="action-icon" id="action-speak" src="resources/chat-icon.png" alt="Speak">
+  </div>
+  <div id="main">
+    <img id="main-image" src="resources/main_01.jpg" alt="Main room" usemap="#main-map">
+    <map name="main-map">
+      <area shape="rect" coords="304,304,466,466" href="http://www.ikea.com" alt="IKEA">
+      <area shape="rect" coords="780,304,990,466" href="http://www.apple.com" alt="iMac">
+    </map>
+  </div>
+  <div id="right">
+    <img class="item-icon hidden" data-id="slack" id="item-slack" src="resources/slack.png" alt="Slack">
+    <img class="item-icon hidden" data-id="golden" id="item-golden" src="resources/golden.jpg" alt="Golden">
+  </div>
+  <div id="action">
+    
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+
+</body>
