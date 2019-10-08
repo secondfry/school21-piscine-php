@@ -1,16 +1,23 @@
+body {
+  margin: 0;
+}
+
 #main {
   display: grid;
   justify-content: center;
   align-content: center;
   height: 98vh;
+
+  background: #333;
 }
 
 a.item {
   padding: 0.25rem 0.5rem;
-  background: #bbb;
+  background: #444;
   border: 1px solid #000;
   border-bottom: none;
   text-decoration: none;
+  color: #fff;
 }
 
 .item:last-of-type {
@@ -19,7 +26,7 @@ a.item {
 
 a.item:hover {
   cursor: pointer;
-  background: #999;
+  background: #222;
 }
 
 .dropdown {
@@ -32,6 +39,8 @@ a.item:hover {
 
 .dropdown:hover > .dropdown-inside {
   display: grid;
+
+  animation: fadeInFromNone 0.3s ease-in-out;
 }
 
 .dropdown-inside {
@@ -42,9 +51,26 @@ a.item:hover {
 }
 
 .dropdown-inside .item {
-  background: #aaa;
+  background: #555;
 }
 
 .dropdown-inside .item:hover {
-  background: #888;
+  background: #333;
+}
+
+@keyframes fadeInFromNone {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: grid;
+    opacity: 0;
+  }
+
+  100% {
+    display: grid;
+    opacity: 1;
+  }
 }
