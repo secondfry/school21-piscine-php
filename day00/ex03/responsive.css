@@ -1,0 +1,97 @@
+#body {
+  margin: 0;
+}
+
+#logo-wrap {
+  margin: 1em auto;
+  text-align: center;
+  max-width: 200px;
+}
+#logo {
+  max-width: 100%;
+  height: auto;
+}
+
+#table {
+  border-spacing: 1px;
+  display: block;
+  overflow: auto;
+  width: 100%;
+  margin: 0 !important;
+
+  font-size: 10px;
+}
+#table small, .cell-asterisk {
+  font-size: 4px;
+}
+
+@media (min-width: 321px) {
+  #table {
+    font-size: 12px;
+  }
+  #table small, .cell-asterisk {
+    font-size: 5px;
+  }
+}
+
+@media (min-width: 376px) {
+  #table {
+    font-size: 13px;
+  }
+  #table small, .cell-asterisk {
+    font-size: 6px;
+  }
+}
+
+@media (min-width: 500px) {
+  #table {
+    font-size: initial;
+  }
+  #table small, .cell-asterisk {
+    font-size: 8px;
+  }
+}
+
+@media (min-width: 600px) {
+  #table {
+    font-size: initial;
+  }
+  #table small, .cell-asterisk {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 749px) {
+  #table {
+    font-size: initial;
+  }
+  #table small, .cell-asterisk {
+    font-size: smaller;
+  }
+}
+
+.cell {
+  width: 5%;
+}
+.cell-odd {
+  background: #e8e8e8;
+}
+.cell-even {
+  background: #f0f0f0;
+}
+.cell-space {
+  width: 1%;
+}
+.cell-weight {
+  display: block;
+  text-align: right;
+}
+.cell-item {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+.cell-number {
+  display: block;
+  text-align: left;
+}
