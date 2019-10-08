@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<title>Basics</title>
+<style lang="style/css">
+#body {
+  background: pink;
+  margin: 0;
+}
+#title {
+  padding: 0 1rem;
+  text-align: center;
+  color: white;
+}
+#shop-wrap {
+  display: grid;
+  grid-template-columns: minmax(max-content, 300px) minmax(max-content, 300px);
+  grid-column-gap: 1rem;
+  justify-content: center;
+}
+.shop {
+  padding: 0 1rem;
+  display: grid;
+  text-align: center;
+}
+.shop-image-wrap {
+  position: relative;
+  max-width: 300px;
+}
+.shop-image-wrap::before {
+  padding-top: 56.25%;
+  display: block;
+  content: "";
+}
+.shop-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  height: auto;
+  margin: auto 0;
+}
+#footer {
+  padding: 0 1rem;
+  font-style: italic;
+  font-family: monospace;
+  text-align: right;
+}
+</style>
+</head>
+<body id="body">
+<h1 id="title">😂 Fry Labs &mdash; Piscine PHP 👌</h1>
+<div id="shop-wrap">
+  <div class="shop">
+    <div class="shop-image-wrap">
+      <img class="shop-image" alt="Amazon"
+           src="https://i.imgur.com/2iHv8mD.png">
+    </div>
+    <a href="https://amazon.com">Amazon</a>
+  </div>
+  <div class="shop">
+    <div class="shop-image-wrap">
+      <img class="shop-image" alt="OZON"
+           src="https://upload.wikimedia.org/wikipedia/ru/e/ec/OZON_2019.svg">
+    </div>
+    <a href="https://ozon.ru">OZON</a>
+  </div>
+</div>
+<hr>
+<footer id="footer">&copy; oadhesiv 2019</footer>
+</body>
