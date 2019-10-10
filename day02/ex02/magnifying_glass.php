@@ -22,7 +22,7 @@ function enlarge_non_tag($match) {
 }
 
 $data = file_get_contents($argv[1]);
-$data = preg_replace_callback('/(<a.*?>)(.*?)(<\/a>)/', function ($match) {
+$data = preg_replace_callback('/(<a.*?>)([\s\S]*?)(<\/a>)/im', function ($match) {
 
   $match_title_1 = '/title="([^"]+)"/';
   $match_title_2 = '/title=([^" ]+)/';
