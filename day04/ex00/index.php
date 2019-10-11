@@ -18,29 +18,11 @@ function check_session() {
 check_session();
 
 ?>
-<html>
-<body>
+<html><body>
 <form action="index.php">
-  <table>
-    <tr>
-      <td>Username</td>
-      <td>
-        <input type="text" name="login" value="<?=$_SESSION['login']?>">
-      </td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td>
-        <input type="text" name="passwd" value="<?=$_SESSION['passwd']?>">
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>
-        <input type="submit" name="submit" value="OK">
-      </td>
-    </tr>
-  </table>
+   Username: <input type="text" name="login" value="<?=$_SESSION['login']?>">
+   <br>
+   Password: <input type="text" name="passwd" value="<?=$_SESSION['passwd']?>">
+  <input type="submit" name="submit" value="OK">
 </form>
-</body>
-</html>
+</body></html>
