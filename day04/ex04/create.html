@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Уютненькое Школы 21</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style lang="css">
+body {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+
+  background: #333;
+  color: #eee;
+
+  height: 98vh;
+}
+#form {
+  display: grid;
+  grid-template-columns: max-content;
+  grid-column-gap: 1rem;
+  justify-content: center;
+}
+#actions {
+  margin: 1rem 0;
+
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-column-gap: 1rem;
+  justify-content: center;
+}
+a.action {
+  text-decoration: underline;
+  color: #eee;
+}
+@media (min-width: 500px) {
+  #title {
+    text-align: center;
+  }
+  #form {
+    grid-template-columns: min-content 1fr;
+  }
+  #login, #passwd {
+    text-align: right;
+
+    display: grid;
+    align-content: center;
+  }
+}
+</style>
+</head>
+<body>
+<div>
+  <h1 id="title">Уютненькое Школы 21</h1>
+  <h2>Регистрация</h2>
+  <form action="create.php" method="post" id="form">
+    <div id="login">Имя</div>
+    <input type="text" name="login">
+    <div id="passwd">Пароль</div>
+    <input type="password" name="passwd">
+    <div></div>
+    <input type="submit" name="submit" value="OK">
+  </form>
+</div>
+</body>
+</html>
