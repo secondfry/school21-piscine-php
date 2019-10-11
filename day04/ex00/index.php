@@ -22,7 +22,7 @@ check_session();
 <form action="index.php">
    Username: <input type="text" name="login" value="<?=$_SESSION['login']?>">
    <br>
-   Password: <input type="text" name="passwd" value="<?=$_SESSION['passwd']?>">
+   Password: <input type="password" name="passwd" value="<?=$_SESSION['passwd']?>">
   <input type="submit" name="submit" value="OK">
 </form>
 </body></html>
