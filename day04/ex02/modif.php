@@ -18,6 +18,7 @@ $file = $path . '/passwd';
 
 if (!file_exists($file)) {
   echo 'ERROR' . "\n";
+  return;
 }
 
 $data = file_get_contents($file);
