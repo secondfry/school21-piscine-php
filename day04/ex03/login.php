@@ -11,8 +11,7 @@ if (!auth($user, $pass)) {
   $_SESSION['loggued_on_user'] = '';
   echo 'ERROR' . "\n";
   return;
-} else {
-  $_SESSION['loggued_on_user'] = $user;
-  echo 'OK' . "\n";
-  return;
 }
+
+$_SESSION['loggued_on_user'] = $user;
+echo 'OK' . "\n";
