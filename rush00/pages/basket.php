@@ -40,7 +40,7 @@ foreach ($items as $item) {
     </td>
     <td><?=format_price($item['price'] * $item['qty'])?></td>
     <?php
-      $result += $item['price'] * $item['qty']);
+      $result += $item['price'] * $item['qty'];
     ?>
   </tr>
 <?php
