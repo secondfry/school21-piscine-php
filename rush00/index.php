@@ -23,15 +23,18 @@ switch ($action) {
       case 'login':
         require_once 'pages/login.php';
         return;
-      case 'logout':
-        require_once 'pages/logout.php';
-        return;
       default:
-        echo 'nice try';
+        ft_reset();
         return;
     }
   case 'register':
     user_register($DB);
+    return;
+  case 'login':
+    user_login($DB);
+    return;
+  case 'logout':
+    user_logout($DB);
     return;
   default:
     require_once 'pages/index.php';

@@ -17,6 +17,9 @@ $url_category = url_get_category();
   ?>
   <div class="some_block" id="header_top">
     <div id="title">Книжный магазин «Уютный раш»</div>
+    <?php
+      display_login_logout();
+    ?>
     <a href="/index.php?action=basket">Корзина</a>
   </div>
   <navbar class="navigation">

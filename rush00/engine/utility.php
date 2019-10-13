@@ -177,3 +177,106 @@ function display_notification() {
 
   $_SESSION['notification'] = [];
 }
+
+function display_login_logout() {
+  if (empty($_SESSION['user']['name'])) {
+    ?>
+<a href="/index.php?action=view&page=login">Войти</a>
+    <?php
+  } else {
+    ?>
+<div class="nowrap">
+  Привет, <?=htmlentities($_SESSION['user']['name'])?>!
+  <a class="ml1" href="/index.php?action=logout">Выйти</a>
+</div>
+    <?php
+  }
+}
+
+function user_login($DB) {
+  $email = $_POST['email'];
+  $pass = $_POST['passwd'];
+  $salt = $_POST['submit'];
+
+  if (!$email) {
+    $_SESSION['notification'][] = [
+      'text' => 'Вы не указали электронную почту для входа!',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$pass) {
+    $_SESSION['notification'][] = [
+      'text' => 'Вы не указали пароль для входа!',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$salt || $salt !== 'OK') {
+    $_SESSION['notification'][] = [
+      'text' => 'Nice try! ;)',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$email || !$pass) {
+    ft_reset_to('/index.php?action=view&page=login');
+  }
+
+  if (!$salt || $salt !== 'OK') {
+    ft_reset();
+  }
+
+  $stmt = mysqli_prepare($DB, 'SELECT `name`, `email`, `password` FROM `users` WHERE `email` = ?');
+  if (!$stmt) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL.',
+      'type' => 'bad',
+    ];
+    ft_reset();
+  }
+
+  mysqli_stmt_bind_param($stmt, 's', $email);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_bind_result($stmt, $name_db, $email_db, $pass_db);
+
+  if (!mysqli_stmt_fetch($stmt)) {
+    $_SESSION['notification'][] = [
+      'text' => 'Проверьте свой логин и пароль.',
+      'type' => 'bad',
+    ];
+    mysqli_stmt_close($stmt);
+    ft_reset_to('/index.php?action=view&page=login');
+  }
+  mysqli_stmt_close($stmt);
+
+  $pass = hash('sha512', $pass);
+  if ($pass != $pass_db) {
+    $_SESSION['notification'][] = [
+      'text' => 'Проверьте свой логин и пароль.',
+      'type' => 'bad',
+    ];
+    ft_reset_to('/index.php?action=view&page=login');
+  }
+
+  $_SESSION['notification'][] = [
+    'text' => 'Успешный вход ( ͡° ͜ʖ ͡°)',
+    'type' => 'good',
+  ];
+  $_SESSION['user']['name'] = $name_db;
+  $_SESSION['user']['email'] = $email_db;
+  ft_reset();
+}
+
+function user_logout() {
+  $_SESSION['notification'][] = [
+    'text' => 'Успешный выход ( ͡° ͜ʖ ͡°)',
+    'type' => 'good',
+  ];
+  $_SESSION['user'] = [
+    'type' => 'user',
+    'name' => '',
+    'email' => '',
+  ];
+  ft_reset();
+}

@@ -136,6 +136,14 @@ p:last-child {
   background: #544;
 }
 
+.nowrap {
+  white-space: nowrap !important;
+}
+
+.ml1 {
+  margin-left: 1rem !important;
+}
+
 /* Магазин */
 .shop_items {
   display: grid;
