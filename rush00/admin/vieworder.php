@@ -22,6 +22,7 @@ $row = mysqli_fetch_assoc($res);
 <tbody>
 <?php
 
+$result = 0;
 
 $res = mysqli_query($DB, 'SELECT * FROM `order_item` LEFT JOIN `items` ON `order_item`.`item_id`=`items`.`id` WHERE `order_id` = ' . $id);
 while ($row = mysqli_fetch_assoc($res)) {
@@ -31,6 +32,9 @@ while ($row = mysqli_fetch_assoc($res)) {
     <td><?=format_price($row['price'])?></td>
     <td><?=$row['item_qty']?></td>
     <td><?=format_price($row['price'] * $row['item_qty'])?></td>
+    <?php
+      $result += $row['price'] * $row['item_qty'];
+    ?>
   </tr>
 <?php
 }
@@ -38,6 +42,7 @@ while ($row = mysqli_fetch_assoc($res)) {
 ?>
 </tbody>
 </table>
+Итого: <?=format_price($result)?>.<br>
 <?php
 
 require_once 'pieces/footer.php';
