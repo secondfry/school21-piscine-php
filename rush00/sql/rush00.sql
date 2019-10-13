@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 192.168.99.104
--- Generation Time: Oct 13, 2019 at 08:14 PM
+-- Generation Time: Oct 13, 2019 at 08:20 PM
 -- Server version: 10.4.8-MariaDB-1:10.4.8+maria~bionic
 -- PHP Version: 5.6.30
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `rush00`
 --
+CREATE DATABASE IF NOT EXISTS `rush00` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `rush00`;
 
 -- --------------------------------------------------------
 
@@ -28,15 +30,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `short` varchar(16) NOT NULL COMMENT 'Ключ',
   `name` text DEFAULT NULL COMMENT 'Имя',
   `description` text DEFAULT NULL COMMENT 'Описание',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата создания',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата изменения',
-  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `short` (`short`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
@@ -55,11 +59,14 @@ INSERT INTO `category` (`id`, `short`, `name`, `description`, `created_at`, `upd
 -- Table structure for table `category_item`
 --
 
-CREATE TABLE `category_item` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `category_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `category_id` int(11) NOT NULL COMMENT 'ID категории',
-  `item_id` int(11) NOT NULL COMMENT 'ID книги'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `item_id` int(11) NOT NULL COMMENT 'ID книги',
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  KEY `item_id` (`item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category_item`
@@ -88,8 +95,8 @@ INSERT INTO `category_item` (`id`, `category_id`, `item_id`) VALUES
 -- Table structure for table `items`
 --
 
-CREATE TABLE `items` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `short` varchar(16) NOT NULL COMMENT 'Ключ',
   `name` tinytext DEFAULT NULL COMMENT 'Название',
   `price` float DEFAULT 0 COMMENT 'Цена',
@@ -97,8 +104,10 @@ CREATE TABLE `items` (
   `image` tinytext DEFAULT NULL COMMENT 'Ссылка на картинку',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата создания',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата изменения',
-  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `short` (`short`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `items`
@@ -124,11 +133,13 @@ INSERT INTO `items` (`id`, `short`, `name`, `price`, `description`, `image`, `cr
 -- Table structure for table `orders`
 --
 
-CREATE TABLE `orders` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `user_id` int(11) NOT NULL COMMENT 'ID пользователя',
-  `status` varchar(16) NOT NULL DEFAULT 'placed' COMMENT 'Статус заказа'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `status` varchar(16) NOT NULL DEFAULT 'placed' COMMENT 'Статус заказа',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `orders`
@@ -140,7 +151,8 @@ INSERT INTO `orders` (`id`, `user_id`, `status`) VALUES
 (3, 7, 'placed'),
 (4, 7, 'placed'),
 (5, 7, 'placed'),
-(6, 13, 'placed');
+(6, 13, 'placed'),
+(7, 14, 'placed');
 
 -- --------------------------------------------------------
 
@@ -148,12 +160,15 @@ INSERT INTO `orders` (`id`, `user_id`, `status`) VALUES
 -- Table structure for table `order_item`
 --
 
-CREATE TABLE `order_item` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `order_id` int(11) NOT NULL COMMENT 'ID заказа',
   `item_id` int(11) NOT NULL COMMENT 'ID книги',
-  `item_qty` int(11) NOT NULL DEFAULT 1 COMMENT 'Количество книг'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `item_qty` int(11) NOT NULL DEFAULT 1 COMMENT 'Количество книг',
+  PRIMARY KEY (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `item_id` (`item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order_item`
@@ -165,7 +180,9 @@ INSERT INTO `order_item` (`id`, `order_id`, `item_id`, `item_qty`) VALUES
 (3, 5, 2, 8),
 (4, 6, 6, 1),
 (5, 6, 9, 2),
-(6, 6, 1, 1);
+(6, 6, 1, 1),
+(7, 7, 9, 1),
+(8, 7, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -173,16 +190,18 @@ INSERT INTO `order_item` (`id`, `order_id`, `item_id`, `item_qty`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL COMMENT 'ID',
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `type` text NOT NULL DEFAULT 'user' COMMENT 'Тип пользователя',
   `name` text DEFAULT NULL COMMENT 'Имя пользователя',
   `email` text DEFAULT NULL COMMENT 'Электронная почта',
   `password` varchar(128) DEFAULT NULL COMMENT 'Хэш пароля',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата создания',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Дата изменения',
-  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `active` int(1) NOT NULL DEFAULT 0 COMMENT 'Статус',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -197,94 +216,6 @@ INSERT INTO `users` (`id`, `type`, `name`, `email`, `password`, `created_at`, `u
 (12, 'admin', 'qwert', 'qwert@qwert.ru', 'c0225bde4916276b2058e16c4a00e27557c65472e318e0746523c71b85288ef87a424f9c88dcccbdde9755615327e365aa90f60c813b4d2997306a9cfab168d6', '2019-10-13 19:46:29', '2019-10-13 19:46:29', 1),
 (13, 'user', 'test', 'test@test.ru', 'ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff', '2019-10-13 20:11:09', '2019-10-13 20:11:09', 1),
 (14, 'user', 'asdf', 'asdf@asdf.ru', '401b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429080fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1', '2019-10-13 20:14:18', '2019-10-13 20:14:18', 1);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `short` (`short`);
-
---
--- Indexes for table `category_item`
---
-ALTER TABLE `category_item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`),
-  ADD KEY `item_id` (`item_id`);
-
---
--- Indexes for table `items`
---
-ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `short` (`short`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `order_item`
---
-ALTER TABLE `order_item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `item_id` (`item_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`) USING HASH;
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `category_item`
---
-ALTER TABLE `category_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `items`
---
-ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `order_item`
---
-ALTER TABLE `order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID', AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

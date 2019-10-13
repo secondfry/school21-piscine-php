@@ -162,6 +162,8 @@ function user_login($DB) {
 }
 
 function user_logout() {
+  session_destroy();
+  session_start();
   $_SESSION['notification'][] = [
     'text' => 'Успешный выход ( ͡° ͜ʖ ͡°)',
     'type' => 'good',
