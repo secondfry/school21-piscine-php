@@ -58,7 +58,12 @@ function get_one_by_key_val($DB, $table, $key, $value) {
 }
 
 function get_items_by_category($DB, $category) {
-  $res = mysqli_query($DB, 'SELECT * FROM `items` WHERE `active` = 1 AND `category` = "' . $category['id'] . '"');
+  $res = mysqli_query($DB, '
+    SELECT *
+    FROM `items`
+    WHERE `active` = 1
+          AND `id` IN (SELECT `item_id` FROM `category_item` WHERE `category_id` = "' . $category['id'] . '")
+  ');
   if (!$res) {
     return false;
   }
@@ -66,14 +71,28 @@ function get_items_by_category($DB, $category) {
   return $res;
 }
 
-function display_item($item) {
+function display_item($DB, $item) {
   ?>
-<div class="shop_item">
-  <img src="<?=$item['image']?>" alt="<?=$item['name']?>" class="shop_item_image img_responsive">
-  <h2 class="shop_item_title"><?=$item['name']?></h2>
-  <p class="shop_item_description"><?=$item['description']?></p>
-  <div class="shop_item_actions">В корзину!</div>
-</div><?php
+    <div class="shop_item">
+      <img src="<?=$item['image']?>" alt="<?=$item['name']?>" class="shop_item_image img_responsive">
+      <h2 class="shop_item_title"><?=$item['name']?></h2>
+      <div class="shop_item_categories">
+        <?php
+          $res = mysqli_query($DB, '
+            SELECT *
+            FROM `category`
+            WHERE `active` = 1
+                  AND `id` IN (SELECT `category_id` FROM `category_item` WHERE `item_id` = "' . $item['id'] . '")
+          ');
+          while ($category = mysqli_fetch_assoc($res)) { ?>
+            <a class="shop_item_category" href="/index.php?action=category&category=<?=$category['short']?>"><?=$category['name']?></a>
+          <?php }
+        ?>
+      </div>
+      <p class="shop_item_description"><?=$item['description']?></p>
+      <div class="shop_item_actions">В корзину!</div>
+    </div>
+  <?php
 }
 
 function user_register($DB) {

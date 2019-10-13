@@ -18,7 +18,7 @@ if ($url_category === 'all') {
 }
 
 while ($item = mysqli_fetch_assoc($items)) {
-  display_item($item);
+  display_item($DB, $item);
 }
 ?>
 </div>
