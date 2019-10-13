@@ -100,9 +100,9 @@ function display_item($DB, $item) {
             return $acc;
           }, $item['id']);
           if ($res === true) { ?>
-            <a class="shop_item_basket remove" href="/index.php?action=basket&basket_action=remove&item=<?=$item['id']?>">Из корзины</a>
+            <a class="shop_item_basket remove" href="/index.php?action=basket&basket_action=remove&item_id=<?=$item['id']?>">Из корзины</a>
           <?php } else { ?>
-            <a class="shop_item_basket add" href="/index.php?action=basket&basket_action=add&item=<?=$item['id']?>">В корзину</a>
+            <a class="shop_item_basket add" href="/index.php?action=basket&basket_action=add&item_id=<?=$item['id']?>">В корзину</a>
           <?php }
         ?>
       </div>

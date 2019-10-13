@@ -41,11 +41,11 @@ switch ($action) {
     $baction = url_get('basket_action', '/^[a-z]+$/');
     switch ($baction) {
       case 'add':
-        $item = url_get('item', '/^[0-9]+$/');
+        $item = url_get('item_id', '/^[0-9]+$/');
         basket_add($DB, $item);
         return;
       case 'remove':
-        $item = url_get('item', '/^[0-9]+$/');
+        $item = url_get('item_id', '/^[0-9]+$/');
         basket_remove($DB, $item);
         return;
       default:
