@@ -21,6 +21,8 @@ if (empty($_SESSION['user']['email'])) {
 <tbody>
 <?php
 
+$result = 0;
+
 $items = array_reduce($_SESSION['basket'], function ($acc, $cur) use ($DB) {
   $item = get_one_by_key_val($DB, 'items', 'id', $cur['id']);
   $item['qty'] = $cur['qty'];
@@ -37,6 +39,9 @@ foreach ($items as $item) {
       <input type="number" value="<?=$item['qty']?>" name="qty[<?=$item['id']?>]">
     </td>
     <td><?=format_price($item['price'] * $item['qty'])?></td>
+    <?php
+      $result += $item['price'] * $item['qty']);
+    ?>
   </tr>
 <?php
 }
@@ -44,6 +49,7 @@ foreach ($items as $item) {
 ?>
 </tbody>
 </table>
+Итого: <?=format_price($result)?>.<br>
 <input type="submit" name="action" value="Пересчитать">
 <?php
   if (empty($_SESSION['user']['email'])) {
