@@ -1,3 +1,8 @@
+<?php
+
+$url_category = url_get_category();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,22 +19,24 @@
   <navbar class="navigation">
     <a class="nav_link" href="/">Главная</a>
     <a class="nav_link" href="/index.php?action=view&page=about">О нас</a>
-    <a class="nav_link" href="/index.php?action=category&page=all">Все книги</a>
+    <a class="nav_link" href="/index.php?action=category&category=all">Все книги</a>
     <a class="nav_link" href="/index.php?action=view&page=contacts">Контакты</a>
   </navbar>
   <navbar class="navigation">
     <?php
       $res = get_all($DB, 'category');
-      $url_category = url_get_category();
       if ($res) {
         while ($row = mysqli_fetch_assoc($res)) {
-          $flag = $category == $row['short'] ? ' active' : '';
+          $flag = $url_category == $row['short'] ? ' active' : '';
           ?><a class="nav_link<?=$flag?>" href="/index.php?action=category&category=<?=$row['short']?>"><?=$row['name']?></a><?php
         }
       }
 
-      unset($res, $url_category, $row, $flag);
+      unset($res, $row, $flag);
     ?>
   </navbar>
 </header>
 <div class="some_block" id="main">
+<?php
+
+unset($url_category);

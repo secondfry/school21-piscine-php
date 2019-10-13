@@ -5,6 +5,10 @@ function url_get_category() {
 }
 
 function url_get($name, $regex) {
+  if (empty($_GET[$name])) {
+    return false;
+  }
+
   $status = preg_match($regex, $_GET[$name], $matches);
   if (!$status) {
     ft_reset();

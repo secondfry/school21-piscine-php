@@ -11,7 +11,12 @@ $category = get_one_by_key_val($DB, 'category', 'short', $url_category);
 <div class="shop_items">
 <?php
 
-$items = get_items_by_category($DB, $category);
+if ($url_category === 'all') {
+  $items = get_all($DB, 'items');
+} else {
+  $items = get_items_by_category($DB, $category);
+}
+
 while ($item = mysqli_fetch_assoc($items)) {
   display_item($item);
 }
