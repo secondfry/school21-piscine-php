@@ -30,3 +30,35 @@ function get_all($DB, $table) {
 
   return $res;
 }
+
+function get_by_key_val($DB, $table, $key, $value) {
+  $res = mysqli_query('SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
+  if (!$res) {
+    return false;
+  }
+
+  return $res;
+}
+
+function get_one_by_key_val($DB, $table, $key, $value) {
+  $res = mysqli_query('SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
+  if (!$res) {
+    return false;
+  }
+
+  return mysqli_fetch_assoc($res);
+}
+
+function get_items_by_category($DB, $category) {
+  $category = get_one_by_key_val($DB, 'category', 'short', $category);
+  if (!$category) {
+    return false;
+  }
+
+  $res = mysqli_query($DB, 'SELECT * FROM `items` WHERE `active` = 1 AND `category` = "' . $category['id'] . '"');
+  if (!$res) {
+    return false;
+  }
+
+  return $res;
+}
