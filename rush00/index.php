@@ -6,6 +6,7 @@ $action = url_get('action', '/^[a-z]+$/');
 
 switch ($action) {
   case 'category':
+    save_history();
     require_once 'pages/category.php';
     return;
   case 'view':
@@ -36,6 +37,21 @@ switch ($action) {
   case 'logout':
     user_logout($DB);
     return;
+  case 'basket':
+    $baction = url_get('basket_action', '/^[a-z]+$/');
+    switch ($baction) {
+      case 'add':
+        $item = url_get('item', '/^[0-9]+$/');
+        basket_add($DB, $item);
+        return;
+      case 'remove':
+        $item = url_get('item', '/^[0-9]+$/');
+        basket_remove($DB, $item);
+        return;
+      default:
+        ft_reset();
+        return;
+    }
   default:
     require_once 'pages/index.php';
     return;
