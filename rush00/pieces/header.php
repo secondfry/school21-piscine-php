@@ -18,9 +18,16 @@
     <a class="nav_link" href="/index.php?action=view&page=contacts">Контакты</a>
   </navbar>
   <navbar class="navigation">
-    <a class="nav_link" href="/index.php?action=category&category=python">Python</a>
-    <a class="nav_link" href="/index.php?action=category&category=cpp">C/C++</a>
-    <a class="nav_link" href="/index.php?action=category&category=java">Java</a>
+    <?php
+      $res = get_all($DB, 'category');
+      $category = url_get_category();
+      if ($res) {
+        while ($row = mysqli_fetch_assoc($res)) {
+          $flag = $category == $row['short'] ? ' active' : '';
+          ?><a class="nav_link<?=$flag?>" href="/index.php?action=category&category=<?=$row['short']?>"><?=$row['name']?></a><?php
+        }
+      }
+    ?>
   </navbar>
 </header>
 <div class="some_block" id="main">

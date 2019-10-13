@@ -72,6 +72,10 @@ a:hover {
   background: #555;
 }
 
+.nav_link.active {
+  background: #555;
+}
+
 #footer {
   font-size: 0.8rem;
   text-align: center;

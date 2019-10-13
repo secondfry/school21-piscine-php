@@ -1,10 +1,14 @@
 <?php
 
-session_start();
+require_once 'engine/engine.php';
 
-$action = $_GET['action'];
+$action = url_get('action', '/^[a-z]+$/');
 
 switch ($action) {
+  case 'category':
+    require_once 'pages/category.php';
+    return;
   default:
     require_once 'pages/index.php';
+    return;
 }
