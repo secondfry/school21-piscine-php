@@ -20,7 +20,7 @@ $url_category = url_get_category();
     <?php
       display_login_logout();
     ?>
-    <a href="/index.php?action=basket">Корзина</a>
+    <a href="/index.php?action=view&page=basket">Корзина</a>
   </div>
   <navbar class="navigation">
     <a class="nav_link" href="/">Главная</a>

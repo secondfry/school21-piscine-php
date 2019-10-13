@@ -241,3 +241,15 @@ p:last-child {
 .form_input {
   margin: 0.25rem 0 1rem;
 }
+
+/* Корзина */
+.basket_table td,
+.basket_table th {
+  padding: 0.25rem 0.5rem;
+  background: #555;
+  white-space: nowrap;
+}
+
+.basket_table_th_name {
+  width: 100%;
+}

@@ -24,6 +24,10 @@ switch ($action) {
       case 'login':
         require_once 'pages/login.php';
         return;
+      case 'basket':
+        save_history();
+        require_once 'pages/basket.php';
+        return;
       default:
         ft_reset();
         return;
@@ -47,6 +51,9 @@ switch ($action) {
       case 'remove':
         $item = url_get('item_id', '/^[0-9]+$/');
         basket_remove($DB, $item);
+        return;
+      case 'qty':
+        basket_qty($DB);
         return;
       default:
         ft_reset();

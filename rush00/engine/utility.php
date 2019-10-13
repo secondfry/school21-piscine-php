@@ -71,6 +71,10 @@ function get_items_by_category($DB, $category) {
   return $res;
 }
 
+function format_price($price) {
+  return number_format($price, 2, '.', ' ') . ' ₽';
+}
+
 function display_item($DB, $item) {
   ?>
     <div class="shop_item">
@@ -90,7 +94,7 @@ function display_item($DB, $item) {
         ?>
       </div>
       <p class="shop_item_description"><?=$item['description']?></p>
-      <p class="shop_item_price"><?=number_format($item['price'], 2, '.', ' ')?> ₽</p>
+      <p class="shop_item_price"><?=format_price($item['price'])?></p>
       <div class="shop_item_actions">
         <?php
           $res = array_reduce($_SESSION['basket'], function ($acc, $cur) {
