@@ -62,7 +62,7 @@ function admin_edit($DB, $entity, $id) {
   $data = mysqli_fetch_assoc($res);
   ?>
     <h2 class="page_title_small">Редактирование <?=$data['short']?></h2>
-    <form action="/admin.php?entity=<?=$entity?>&action=submit" method="post">
+    <form class="admin_form" action="/admin.php?entity=<?=$entity?>&action=submit" method="post">
       <input type="hidden" name="id" value="<?=$data['id']?>">
       <table>
         <thead>
@@ -133,6 +133,78 @@ function admin_edit($DB, $entity, $id) {
       <input type="submit" value="Отправить">
     </form>
   <?php
+
+  if ($entity === 'items') {
+    admin_show_links($DB, $id);
+  }
+}
+
+function admin_show_links($DB, $id) {
+  ?>
+  <h2 class="page_title_small">Управление категориями</h2>
+  <?php
+  $res = mysqli_query($DB, 'SELECT * FROM `category_item` WHERE `item_id` = ' . $id);
+  if (!$res) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL.',
+      'type' => 'bad',
+    ];
+    ft_reset_to('/admin.php');
+    return;
+  }
+
+  $cats = [0];
+  while ($row = mysqli_fetch_assoc($res)) {
+    $cats[] = $row['category_id'];
+    $category = get_one_by_key_val($DB, 'category', 'id', $row['category_id']);
+    ?>
+      <a class="shop_item_basket remove" href="/admin.php?entity=items&action=unlink&book_id=<?=$id?>&category_id=<?=$category['id']?>">Удалить из категории</a> <?=$category['name']?><br>
+    <?php
+  }
+
+  $res = mysqli_query($DB, 'SELECT * FROM `category` WHERE `id` NOT IN (' . implode(',', $cats) . ')');
+  while ($row = mysqli_fetch_assoc($res)) {
+    if ($row['short'] === 'all') {
+      continue;
+    }
+    ?>
+      <a class="shop_item_basket add" href="/admin.php?entity=items&action=link&book_id=<?=$id?>&category_id=<?=$row['id']?>">Добавить в категорию</a> <?=$row['name']?><br>
+    <?php
+  }
+}
+
+function admin_link($DB, $book_id, $category_id) {
+  $res = mysqli_query($DB, 'INSERT INTO `category_item` (`category_id`, `item_id`) VALUES (' . $category_id . ', ' . $book_id . ')');
+  if (!$res) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL. ' .'INSERT INTO `category_item` (`category_id`, `item_id`) VALUES (' . $category_id . ', ' . $book_id . ')',
+      'type' => 'bad',
+    ];
+    ft_reset_to($_SESSION['page']);
+  }
+
+  $_SESSION['notification'][] = [
+    'text' => 'Успешное добавление книги в категорию.',
+    'type' => 'good',
+  ];
+  ft_reset_to($_SESSION['page']);
+}
+
+function admin_unlink($DB, $book_id, $category_id) {
+  $res = mysqli_query($DB, 'DELETE FROM `category_item` WHERE `category_id` = ' . $category_id . ' AND `item_id` = ' . $book_id);
+  if (!$res) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL.',
+      'type' => 'bad',
+    ];
+    ft_reset_to($_SESSION['page']);
+  }
+
+  $_SESSION['notification'][] = [
+    'text' => 'Успешное удаление книги из категории.',
+    'type' => 'good',
+  ];
+  ft_reset_to($_SESSION['page']);
 }
 
 function admin_submit($DB, $entity) {
@@ -162,6 +234,9 @@ function admin_submit($DB, $entity) {
       case 'id':
         break;
       case 'password':
+        if (empty($v)) {
+          break;
+        }
         $v = hash('sha512', $v);
       default:
         $query = 'UPDATE `' . $entity .'` SET `' . htmlentities($k) . '` = "' . htmlentities($v) . '" WHERE `id` = ' . $id;

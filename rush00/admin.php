@@ -13,6 +13,7 @@ switch ($entity) {
   case 'category':
   case 'items':
   case 'users':
+  case 'orders':
     break;
   default:
     user_logout();
@@ -25,6 +26,8 @@ switch ($action) {
   case 'remove':
   case 'list':
   case 'submit':
+  case 'link':
+  case 'unlink':
     break;
   default:
     user_logout();
@@ -47,11 +50,22 @@ switch ($action) {
     admin_add($DB, $entity);
     return;
   case 'edit':
+    save_history();
     require_once 'admin/edit.php';
     return;
   case 'list':
     save_history();
     require_once 'admin/list.php';
+    break;
+  case 'link':
+    $book_id = url_get('book_id', '/^[0-9]+$/');
+    $category_id = url_get('category_id', '/^[0-9]+$/');
+    admin_link($DB, $book_id, $category_id);
+    break;
+  case 'unlink':
+    $book_id = url_get('book_id', '/^[0-9]+$/');
+    $category_id = url_get('category_id', '/^[0-9]+$/');
+    admin_unlink($DB, $book_id, $category_id);
     break;
   default:
     user_logout();

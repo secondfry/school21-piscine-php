@@ -265,3 +265,7 @@ p:last-child {
 .basket_table_th_name {
   width: 100%;
 }
+
+.admin_form {
+  margin-bottom: 1rem;
+}
