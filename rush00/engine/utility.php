@@ -32,7 +32,7 @@ function get_all($DB, $table) {
 }
 
 function get_by_key_val($DB, $table, $key, $value) {
-  $res = mysqli_query('SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
+  $res = mysqli_query($DB, 'SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
   if (!$res) {
     return false;
   }
@@ -41,7 +41,7 @@ function get_by_key_val($DB, $table, $key, $value) {
 }
 
 function get_one_by_key_val($DB, $table, $key, $value) {
-  $res = mysqli_query('SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
+  $res = mysqli_query($DB, 'SELECT * FROM `' . $table . '` WHERE `' . $key . '` = "' . $value . '"');
   if (!$res) {
     return false;
   }
