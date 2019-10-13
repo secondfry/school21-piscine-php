@@ -21,3 +21,5 @@ if (!$DB) {
   echo 'Ошибка: Невозможно установить соединение с MySQL.' . PHP_EOL;
   exit;
 }
+
+mysqli_set_charset($DB, 'utf8');

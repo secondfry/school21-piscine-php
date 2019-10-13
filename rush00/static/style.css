@@ -89,3 +89,57 @@ a:hover {
 p:last-child {
   margin-bottom: 0;
 }
+
+.img_responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Магазин */
+.shop_items {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+}
+
+.shop_item {
+  display: grid;
+  grid-template: 'image title' min-content 'image description' min-content 'image actions' min-content / 1fr 2fr;
+  grid-auto-rows: min-content;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+
+  background: #666;
+  padding: 1rem;
+}
+
+.shop_item_image {
+  grid-area: image;
+}
+
+.shop_item_title {
+  grid-area: title;
+  margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shop_item_description {
+  grid-area: description;
+  margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shop_item_actions {
+  grid-area: actions;
+}

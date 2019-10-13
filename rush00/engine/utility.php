@@ -50,15 +50,20 @@ function get_one_by_key_val($DB, $table, $key, $value) {
 }
 
 function get_items_by_category($DB, $category) {
-  $category = get_one_by_key_val($DB, 'category', 'short', $category);
-  if (!$category) {
-    return false;
-  }
-
   $res = mysqli_query($DB, 'SELECT * FROM `items` WHERE `active` = 1 AND `category` = "' . $category['id'] . '"');
   if (!$res) {
     return false;
   }
 
   return $res;
+}
+
+function display_item($item) {
+  ?>
+<div class="shop_item">
+  <img src="<?=$item['image']?>" alt="<?=$item['name']?>" class="shop_item_image img_responsive">
+  <h2 class="shop_item_title"><?=$item['name']?></h2>
+  <p class="shop_item_description"><?=$item['description']?></p>
+  <div class="shop_item_actions">В корзину!</div>
+</div><?php
 }

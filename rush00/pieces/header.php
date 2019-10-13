@@ -20,13 +20,15 @@
   <navbar class="navigation">
     <?php
       $res = get_all($DB, 'category');
-      $category = url_get_category();
+      $url_category = url_get_category();
       if ($res) {
         while ($row = mysqli_fetch_assoc($res)) {
           $flag = $category == $row['short'] ? ' active' : '';
           ?><a class="nav_link<?=$flag?>" href="/index.php?action=category&category=<?=$row['short']?>"><?=$row['name']?></a><?php
         }
       }
+
+      unset($res, $url_category, $row, $flag);
     ?>
   </navbar>
 </header>
