@@ -63,7 +63,7 @@ function user_register($DB) {
   }
   mysqli_stmt_close($stmt);
 
-  $stmt = mysqli_prepare($DB, 'INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)');
+  $stmt = mysqli_prepare($DB, 'INSERT INTO `users` (`name`, `email`, `password`, `active`) VALUES (?, ?, ?, 1)');
   if (!$stmt) {
     $_SESSION['notification'][] = [
       'text' => 'Ошибка MySQL.',

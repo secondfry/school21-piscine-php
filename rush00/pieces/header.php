@@ -13,6 +13,7 @@ $url_category = url_get_category();
 <div id="container">
 <header id="header">
   <?php
+    display_admin_panel_link();
     display_notification();
   ?>
   <div class="some_block" id="header_top">

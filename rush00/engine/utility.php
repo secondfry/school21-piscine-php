@@ -148,3 +148,15 @@ function display_login_logout() {
 function save_history() {
   $_SESSION['page'] = $_SERVER['REQUEST_URI'];
 }
+
+function display_admin_panel_link() {
+  if ($_SESSION['user']['type'] !== 'admin') {
+    return;
+  }
+?>
+<div class="notification">
+  Вы администратор!
+  <a href="/admin.php">Перейти в админ-панель</a>
+</div>
+<?php
+}

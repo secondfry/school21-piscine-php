@@ -84,6 +84,11 @@ a:hover {
   margin: 0 0 1rem 0;
 }
 
+.page_title_small {
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+}
+
 p:last-child {
   margin-bottom: 0;
 }
@@ -126,6 +131,8 @@ p:last-child {
   padding: 1rem;
   background: #444;
   margin-bottom: 1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .notification.good {
@@ -142,6 +149,11 @@ p:last-child {
 
 .ml1 {
   margin-left: 1rem !important;
+}
+
+.disabled {
+  background-color: #ccc;
+  opacity: 1;
 }
 
 /* Магазин */
@@ -219,7 +231,7 @@ p:last-child {
 }
 
 .shop_item_basket {
-  display: block;
+  display: inline-block;
   padding: 0.25rem 1rem;
   background: #444;
 }
