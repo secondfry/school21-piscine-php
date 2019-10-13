@@ -12,6 +12,9 @@ $url_category = url_get_category();
 <body>
 <div id="container">
 <header id="header">
+  <?php
+    display_notification();
+  ?>
   <div class="some_block" id="header_top">
     <div id="title">Книжный магазин «Уютный раш»</div>
     <a href="/index.php?action=basket">Корзина</a>

@@ -18,11 +18,15 @@ function url_get($name, $regex) {
 }
 
 function ft_reset() {
-  if ($_SERVER['REQUEST_URI'] === '/') {
+  ft_reset_to('/');
+}
+
+function ft_reset_to($page) {
+  if ($_SERVER['REQUEST_URI'] === $page) {
     return;
   }
 
-  header('Location: /');
+  header('Location: ' . $page);
   exit;
 }
 
@@ -78,18 +82,58 @@ function user_register($DB) {
   $pass = $_POST['passwd'];
   $salt = $_POST['submit'];
 
-  if (!$name || !$email || !$pass || !$salt || $salt !== 'OK') {
+  if (!$name) {
+    $_SESSION['notification'][] = [
+      'text' => 'Вы не указали имя при регистрации!',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$email) {
+    $_SESSION['notification'][] = [
+      'text' => 'Вы не указали электронную почту при регистрации!',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$pass) {
+    $_SESSION['notification'][] = [
+      'text' => 'Вы не указали пароль при регистрации!',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$salt || $salt !== 'OK') {
+    $_SESSION['notification'][] = [
+      'text' => 'Nice try! ;)',
+      'type' => 'bad',
+    ];
+  }
+
+  if (!$name || !$email || !$pass) {
+    ft_reset_to('/index.php?action=view&page=register');
+  }
+
+  if (!$salt || $salt !== 'OK') {
     ft_reset();
   }
 
   $stmt = mysqli_prepare($DB, 'SELECT `id` FROM `users` WHERE `email` = ?');
   if (!$stmt) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL.',
+      'type' => 'bad',
+    ];
     ft_reset();
   }
 
   mysqli_stmt_bind_param($stmt, 's', $email);
   mysqli_stmt_execute($stmt);
   if (mysqli_stmt_fetch($stmt)) {
+    $_SESSION['notification'][] = [
+      'text' => 'Пользователь с таким адресом электронной почты уже зарегистрирован!',
+      'type' => 'bad',
+    ];
     mysqli_stmt_close($stmt);
     ft_reset();
   }
@@ -97,6 +141,10 @@ function user_register($DB) {
 
   $stmt = mysqli_prepare($DB, 'INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)');
   if (!$stmt) {
+    $_SESSION['notification'][] = [
+      'text' => 'Ошибка MySQL.',
+      'type' => 'bad',
+    ];
     ft_reset();
   }
 
@@ -105,5 +153,27 @@ function user_register($DB) {
   mysqli_stmt_execute($stmt);
   mysqli_stmt_close($stmt);
 
+  $_SESSION['notification'][] = [
+    'text' => 'Регистрация прошла успешно!',
+    'type' => 'good',
+  ];
+  $_SESSION['user']['name'] = $name;
+  $_SESSION['user']['email'] = $email;
   ft_reset();
+}
+
+function display_notification() {
+  if (empty($_SESSION['notification'])) {
+    return;
+  }
+
+  foreach($_SESSION['notification'] as $v) {
+    ?>
+<div class="notification <?=$v['type']?>">
+  <?=$v['text']?>
+</div>
+    <?php
+  }
+
+  $_SESSION['notification'] = [];
 }
