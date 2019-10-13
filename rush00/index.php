@@ -17,10 +17,22 @@ switch ($action) {
       case 'contacts':
         require_once 'pages/contacts.php';
         return;
+      case 'register':
+        require_once 'pages/register.php';
+        return;
+      case 'login':
+        require_once 'pages/login.php';
+        return;
+      case 'logout':
+        require_once 'pages/logout.php';
+        return;
       default:
         echo 'nice try';
         return;
     }
+  case 'register':
+    user_register($DB);
+    return;
   default:
     require_once 'pages/index.php';
     return;

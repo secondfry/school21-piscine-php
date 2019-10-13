@@ -71,3 +71,39 @@ function display_item($item) {
   <div class="shop_item_actions">В корзину!</div>
 </div><?php
 }
+
+function user_register($DB) {
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $pass = $_POST['passwd'];
+  $salt = $_POST['submit'];
+
+  if (!$name || !$email || !$pass || !$salt || $salt !== 'OK') {
+    ft_reset();
+  }
+
+  $stmt = mysqli_prepare($DB, 'SELECT `id` FROM `users` WHERE `email` = ?');
+  if (!$stmt) {
+    ft_reset();
+  }
+
+  mysqli_stmt_bind_param($stmt, 's', $email);
+  mysqli_stmt_execute($stmt);
+  if (mysqli_stmt_fetch($stmt)) {
+    mysqli_stmt_close($stmt);
+    ft_reset();
+  }
+  mysqli_stmt_close($stmt);
+
+  $stmt = mysqli_prepare($DB, 'INSERT INTO `users` (`name`, `email`, `password`) VALUES (?, ?, ?)');
+  if (!$stmt) {
+    ft_reset();
+  }
+
+  $pass = hash('sha512', $pass);
+  mysqli_stmt_bind_param($stmt, 'sss', $name, $email, $pass);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+
+  ft_reset();
+}

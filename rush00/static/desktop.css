@@ -2,6 +2,20 @@
   #container {
     max-width: 540px;
   }
+  .form_responsive {
+    grid-template-columns: min-content 1fr;
+    grid-column-gap: 1rem;
+    grid-row-gap: 0.25rem;
+  }
+  .form_title {
+    text-align: right;
+
+    display: grid;
+    align-content: center;
+  }
+  .form_input {
+    margin: 0;
+  }
 }
 
 @media (min-width: 768px) {

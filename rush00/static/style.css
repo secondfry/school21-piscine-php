@@ -172,3 +172,13 @@ p:last-child {
 .shop_item_actions {
   grid-area: actions;
 }
+
+/* Регистрация */
+.form_responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.form_input {
+  margin: 0.25rem 0 1rem;
+}
