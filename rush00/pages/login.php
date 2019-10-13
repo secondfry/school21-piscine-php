@@ -12,6 +12,7 @@ require_once 'pieces/header.php';
   <div></div>
   <input type="submit" name="submit" value="OK">
 </form>
+<a href="/index.php?action=view&page=register">Регистрация</a>
 <?php
 
 require_once 'pieces/footer.php';
