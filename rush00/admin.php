@@ -28,6 +28,7 @@ switch ($action) {
   case 'submit':
   case 'link':
   case 'unlink':
+  case 'see':
     break;
   default:
     user_logout();
@@ -55,6 +56,12 @@ switch ($action) {
     return;
   case 'list':
     save_history();
+
+    if ($entity === 'orders') {
+      require_once 'admin/vieworders.php';
+      return;
+    }
+
     require_once 'admin/list.php';
     break;
   case 'link':
@@ -66,6 +73,13 @@ switch ($action) {
     $book_id = url_get('book_id', '/^[0-9]+$/');
     $category_id = url_get('category_id', '/^[0-9]+$/');
     admin_unlink($DB, $book_id, $category_id);
+    break;
+  case 'see':
+    if ($entity !== 'orders') {
+      user_logout();
+      return;
+    }
+    require_once 'admin/vieworder.php';
     break;
   default:
     user_logout();
