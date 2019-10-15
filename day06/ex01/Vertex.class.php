@@ -91,19 +91,19 @@ class Vertex {
 
   private function _verboseConstruct(): void {
     if (Vertex::$verbose) {
-      echo $this->__toString() . ' constructed.' . "\n";
+      echo $this->__toString() . ' constructed' . "\n";
     }
   }
 
   private function _verboseDestruct(): void {
     if (Vertex::$verbose) {
-      echo $this->__toString() . ' destructed.' . "\n";
+      echo $this->__toString() . ' destructed' . "\n";
     }
   }
 
   public function __toString(): string {
     $ret = sprintf(
-      'Vertex( x: %.02f, y: %.02f, z: %.02f, w: %.02f',
+      'Vertex( x: %.02f, y: %.02f, z:%.02f, w:%.02f',
       $this->_x,
       $this->_y,
       $this->_z,
