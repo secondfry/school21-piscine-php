@@ -5,7 +5,7 @@ class Color {
   static bool $verbose = false;
 
   static function doc(): string {
-    return file_get_contents('Color.doc.txt');
+    return file_get_contents(get_class() . '.doc.txt');
   }
 
   public int $red = 0;
