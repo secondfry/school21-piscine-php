@@ -1,0 +1,32 @@
+
+<- Vertex ----------------------------------------------------------------------
+The Vertex class handles vertexes.
+
+An instance can be contructed from x, y, z coordinates
+with w coordinate and Color being optional:
+new Vertex( array( 'x' => 1.0, 'y' => 0.0, 'z' => 0.0 ) );
+
+If w coordinate is not supplied, it defaults to 1.0.
+If color is not supplied, it default to white.
+Any other use is undefined behaviour.
+
+The class provides the following methods :
+
+Vertex   getX(): float;
+Vertex   getY(): float;
+Vertex   getZ(): float;
+Vertex   getW(): float;
+Getters for each coordinate.
+
+Vertex   setX( float $value ): Vertex;
+Vertex   setY( float $value ): Vertex;
+Vertex   setZ( float $value ): Vertex;
+Vertex   setW( float $value ): Vertex;
+Setters for each coordinate.
+
+Vertex   getColor(): Color;
+Getter for color.
+
+Vertex   setColor( Color $value ): Vertex;
+Setter for color.
+--------------------------------------------------------------------- Vertex ->
