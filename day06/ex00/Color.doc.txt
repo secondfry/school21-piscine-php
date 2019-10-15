@@ -3,24 +3,51 @@
 The Color class handles RGB colors.
 
 An instance can be contructed from either a RGB value:
-new Color( array( 'rgb' => 12345 ) );
+new Color( array( 'rgb' => 255 << 16 + 255 << 8 + 255 ) );
 
 Or from distinct red, green, blue constitutives:
 new Color( array( 'red' => 255, 'green' => 255, 'blue' => 255 ) );
 
-Red, green, blue constitutives and RGB values are converted to intergers.
-Negative or > to 255 color constitutives are left as is.
+Range for red, green, blue constitutives is from 0 to 255.
+Range for RGB values is from 0 to 255 << 16 + 255 << 8 + 255.
+They are first converted to integers and then cropped to fit in range.
 Any other use is undefined behaviour.
 
 The class provides the following methods :
 
-Color   add( Color $rhs );
+Color   add( Color $other );
 Adds each color constitutive and returns a new Color instance.
 
-Color   sub( Color $rhs );
+Color   sub( Color $other );
 Substracts each color constitutive and returns a new Color instance.
 
-Color   mult( $f );
-Multiplies each color constitutive by factor $f and returns a new Color
-instance.
+Color   mult( mixed $f );
+Multiplies each color constitutive by factor $f converted to float and
+returns a new Color instance.
+
+Color   setRBG( array['rgb' => value] );
+Sets red, green and blue constitutives.
+Range for RGB values is from 0 to 255 << 16 + 255 << 8 + 255.
+It is first converted to integer and then cropped to fit in range.
+
+Color   set( array['red'? => value, 'green'? => value, 'blue'? => value ]);
+Allows partial color (i.e. only red and green channel supplied).
+Sets red, green and blue constitutives.
+Range for red, green, blue constitutives is from 0 to 255.
+They are first converted to integers and then cropped to fit in range.
+
+Color   setRed( int $red );
+Sets red constitutive.
+Range for red constitutive is from 0 to 255.
+It is first converted to integer and then cropped to fit in range.
+
+Color   setGreen( int $green );
+Sets green constitutive.
+Range for green constitutive is from 0 to 255.
+It is first converted to integer and then cropped to fit in range.
+
+Color   setBlue( int $blue );
+Sets blue constitutive.
+Range for blue constitutive is from 0 to 255.
+It is first converted to integer and then cropped to fit in range.
 ---------------------------------------------------------------------- Color ->
