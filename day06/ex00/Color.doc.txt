@@ -28,26 +28,21 @@ returns a new Color instance.
 Color   setRBG( array['rgb' => value] );
 Sets red, green and blue constitutives.
 Range for RGB values is from 0 to 255 << 16 + 255 << 8 + 255.
-It is first converted to integer and then cropped to fit in range.
 
 Color   set( array['red'? => value, 'green'? => value, 'blue'? => value ]);
 Allows partial color (i.e. only red and green channel supplied).
 Sets red, green and blue constitutives.
 Range for red, green, blue constitutives is from 0 to 255.
-They are first converted to integers and then cropped to fit in range.
 
 Color   setRed( int $red );
 Sets red constitutive.
 Range for red constitutive is from 0 to 255.
-It is first converted to integer and then cropped to fit in range.
 
 Color   setGreen( int $green );
 Sets green constitutive.
 Range for green constitutive is from 0 to 255.
-It is first converted to integer and then cropped to fit in range.
 
 Color   setBlue( int $blue );
 Sets blue constitutive.
 Range for blue constitutive is from 0 to 255.
-It is first converted to integer and then cropped to fit in range.
 ---------------------------------------------------------------------- Color ->
