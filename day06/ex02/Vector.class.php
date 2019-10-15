@@ -58,49 +58,44 @@ class Vector {
   }
 
   public function normalize(): Vector {
-    $ret = clone $this;
     $mag = $this->magnitude();
-    $ret->_x = $this->_x / $mag;
-    $ret->_y = $this->_y / $mag;
-    $ret->_z = $this->_z / $mag;
-    $ret->_w = $this->_w / $mag;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' => $this->_x / $mag,
+      'y' => $this->_y / $mag,
+      'z' => $this->_z / $mag
+    ])]);
   }
 
   public function add( Vector $that ): Vector {
-    $ret = clone $this;
-    $ret->_x += $that->_x;
-    $ret->_y += $that->_y;
-    $ret->_z += $that->_z;
-    $ret->_w += $that->_w;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' => $this->_x + $that->_x,
+      'y' => $this->_y + $that->_y,
+      'z' => $this->_z + $that->_z
+    ])]);
   }
 
   public function sub( Vector $that ): Vector {
-    $ret = clone $this;
-    $ret->_x -= $that->_x;
-    $ret->_y -= $that->_y;
-    $ret->_z -= $that->_z;
-    $ret->_w -= $that->_w;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' => $this->_x - $that->_x,
+      'y' => $this->_y - $that->_y,
+      'z' => $this->_z - $that->_z
+    ])]);
   }
 
   public function opposite(): Vector {
-    $ret = clone $this;
-    $ret->_x *= -1;
-    $ret->_y *= -1;
-    $ret->_z *= -1;
-    $ret->_w *= -1;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' => -$this->_x,
+      'y' => -$this->_y,
+      'z' => -$this->_z
+    ])]);
   }
 
   public function scalarProduct( float $k ): Vector {
-    $ret = clone $this;
-    $ret->_x *= $k;
-    $ret->_y *= $k;
-    $ret->_z *= $k;
-    $ret->_w *= $k;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' => $this->_x * $k,
+      'y' => $this->_y * $k,
+      'z' => $this->_z * $k
+    ])]);
   }
 
   public function dotProduct( Vector $that ): float {
@@ -112,11 +107,11 @@ class Vector {
   }
 
   public function crossProduct ( Vector $that ): Vector {
-    $ret = clone $this;
-    $ret->_x =   $this->_y * $that->_z - $that->_y * $this->_z;
-    $ret->_y = -($this->_x * $that->_z - $that->_x * $this->_z);
-    $ret->_z =   $this->_x * $that->_y - $that->_x * $this->_y;
-    return $ret;
+    return new Vector(['dest' => new Vertex([
+      'x' =>   $this->_y * $that->_z - $that->_y * $this->_z,
+      'y' => -($this->_x * $that->_z - $that->_x * $this->_z),
+      'z' =>   $this->_x * $that->_y - $that->_x * $this->_y
+    ])]);
   }
 
   public function cos( Vector $that ): float {
