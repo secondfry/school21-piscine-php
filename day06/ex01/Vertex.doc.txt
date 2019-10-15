@@ -12,21 +12,21 @@ Any other use is undefined behaviour.
 
 The class provides the following methods :
 
-Vertex   getX(): float;
-Vertex   getY(): float;
-Vertex   getZ(): float;
-Vertex   getW(): float;
+float   getX();
+float   getY();
+float   getZ();
+float   getW();
 Getters for each coordinate.
 
-Vertex   setX( float $value ): Vertex;
-Vertex   setY( float $value ): Vertex;
-Vertex   setZ( float $value ): Vertex;
-Vertex   setW( float $value ): Vertex;
+Vertex   setX( float $value );
+Vertex   setY( float $value );
+Vertex   setZ( float $value );
+Vertex   setW( float $value );
 Setters for each coordinate.
 
-Vertex   getColor(): Color;
+Color   getColor();
 Getter for color.
 
-Vertex   setColor( Color $value ): Vertex;
+Vertex   setColor( Color $value );
 Setter for color.
 --------------------------------------------------------------------- Vertex ->
