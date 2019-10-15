@@ -16,17 +16,17 @@ class Color {
     $keys = array_keys($input);
     if (in_array('rgb', $keys)) {
       $this->setRGB($input['rgb']);
-      $this->verboseConstruct();
+      $this->_verboseConstruct();
       return $this;
     }
 
     $this->set($input);
-    $this->verboseConstruct();
+    $this->_verboseConstruct();
     return $this;
   }
 
   public function __destruct() {
-    $this->verboseDestruct();
+    $this->_verboseDestruct();
   }
 
   public function setRGB($rgb): Color {
@@ -55,21 +55,21 @@ class Color {
   }
 
   public function setRed(int $red): Color {
-    $this->setColorKeyed('red', $red);
+    $this->_setColorKeyed('red', $red);
     return $this;
   }
 
   public function setGreen(int $green): Color {
-    $this->setColorKeyed('green', $green);
+    $this->_setColorKeyed('green', $green);
     return $this;
   }
 
   public function setBlue(int $blue): Color {
-    $this->setColorKeyed('blue', $blue);
+    $this->_setColorKeyed('blue', $blue);
     return $this;
   }
 
-  private function setColorKeyed(string $key, int $value): Color {
+  private function _setColorKeyed(string $key, int $value): Color {
     $this->$key = $value & 0b11111111;
     return $this;
   }
@@ -99,13 +99,13 @@ class Color {
     ]);
   }
 
-  private function verboseConstruct(): void {
+  private function _verboseConstruct(): void {
     if (Color::$verbose) {
       echo $this->__toString() . ' constructed.' . "\n";
     }
   }
 
-  private function verboseDestruct(): void {
+  private function _verboseDestruct(): void {
     if (Color::$verbose) {
       echo $this->__toString() . ' destructed.' . "\n";
     }
