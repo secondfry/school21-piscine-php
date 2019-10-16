@@ -192,12 +192,12 @@ class Matrix {
   public function mult( Matrix $that ): Matrix {
     $ret = clone $this;
     $i = 0;
-    while ($i < 3) {
+    while ($i < 4) {
       $j = 0;
-      while ($j < 3) {
+      while ($j < 4) {
         $ret->_data[$i][$j] = 0;
         $k = 0;
-        while ($k < 3) {
+        while ($k < 4) {
           $ret->_data[$i][$j] += $this->_data[$i][$k] * $that->_data[$k][$j];
           $k++;
         }
