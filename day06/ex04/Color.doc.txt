@@ -1,0 +1,48 @@
+
+<- Color ----------------------------------------------------------------------
+The Color class handles RGB colors.
+
+An instance can be contructed from either a RGB value:
+new Color( array( 'rgb' => 255 << 16 + 255 << 8 + 255 ) );
+
+Or from distinct red, green, blue constitutives:
+new Color( array( 'red' => 255, 'green' => 255, 'blue' => 255 ) );
+
+Range for red, green, blue constitutives is from 0 to 255.
+Range for RGB values is from 0 to 255 << 16 + 255 << 8 + 255.
+They are first converted to integers and then cropped to fit in range.
+Any other use is undefined behaviour.
+
+The class provides the following methods :
+
+Color   add( Color $other );
+Adds each color constitutive and returns a new Color instance.
+
+Color   sub( Color $other );
+Substracts each color constitutive and returns a new Color instance.
+
+Color   mult( mixed $f );
+Multiplies each color constitutive by factor $f converted to float and
+returns a new Color instance.
+
+Color   setRBG( array['rgb' => value] );
+Sets red, green and blue constitutives.
+Range for RGB values is from 0 to 255 << 16 + 255 << 8 + 255.
+
+Color   set( array['red'? => value, 'green'? => value, 'blue'? => value ]);
+Allows partial color (i.e. only red and green channel supplied).
+Sets red, green and blue constitutives.
+Range for red, green, blue constitutives is from 0 to 255.
+
+Color   setRed( int $red );
+Sets red constitutive.
+Range for red constitutive is from 0 to 255.
+
+Color   setGreen( int $green );
+Sets green constitutive.
+Range for green constitutive is from 0 to 255.
+
+Color   setBlue( int $blue );
+Sets blue constitutive.
+Range for blue constitutive is from 0 to 255.
+---------------------------------------------------------------------- Color ->

@@ -237,6 +237,20 @@ class Matrix {
     return $ret;
   }
 
+  public function mirror(): Matrix {
+    $ret = clone $this;
+    $i = 0;
+    while ($i < 4) {
+      $j = 0;
+      while ($j < 4) {
+        $ret->_data[$i][$j] = $this->_data[$j][$i];
+        $j++;
+      }
+      $i++;
+    }
+    return $ret;
+  }
+
   private function _verboseConstruct(): void {
     if (!Matrix::$verbose) {
       return;
