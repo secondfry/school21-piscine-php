@@ -1,0 +1,65 @@
+
+<- Camera ----------------------------------------------------------------------
+The Camera class handles camera.
+
+To create an instance you must supply:
+- `origin` vertex which positions camera in the world mark.
+- `orientation` matrix which orient camera in the world mark.
+- Either:
+  - `width` and `height` of desired image, or
+  - `ratio` of desired image.
+- `fov` - projected image's Field-of-View in degrees.
+- `near` - distance to "near" clipping plane.
+- `far` - distance to "far" clipping plane.
+
+Examples:
+new Camera( [
+  'origin' => new Vertex(...),
+  'orientation' => new Matrix(...),
+  'width' => 640,
+  'height' => 480,
+  'fov' => 60,
+  'near' => 1.0,
+  'far' => 100.0
+] );
+
+Any other use is undefined behaviour.
+
+The class provides the following methods :
+
+Vertex  watchVertex( Vertex $worldVertex );
+Transforms "world" coordinates vertex into a "screen" coordinates vertex.
+--------------------------------------------------------------------- Camera ->
+Camera instance constructed
+Camera( 
++ Origine: Vertex( x: 20.00, y: 20.00, z:80.00, w:1.00 )
++ tT:
+M | vtcX | vtcY | vtcZ | vtxO
+-----------------------------
+x | 1.00 | 0.00 | 0.00 | -20.00
+y | 0.00 | 1.00 | 0.00 | -20.00
+z | 0.00 | 0.00 | 1.00 | -80.00
+w | 0.00 | 0.00 | 0.00 | 1.00
++ tR:
+M | vtcX | vtcY | vtcZ | vtxO
+-----------------------------
+x | -1.00 | 0.00 | -0.00 | 0.00
+y | 0.00 | 1.00 | 0.00 | 0.00
+z | 0.00 | 0.00 | -1.00 | 0.00
+w | 0.00 | 0.00 | 0.00 | 1.00
++ tR->mult( tT ):
+M | vtcX | vtcY | vtcZ | vtxO
+-----------------------------
+x | -1.00 | 0.00 | -0.00 | 20.00
+y | 0.00 | 1.00 | 0.00 | -20.00
+z | 0.00 | 0.00 | -1.00 | 80.00
+w | 0.00 | 0.00 | 0.00 | 1.00
++ Proj:
+M | vtcX | vtcY | vtcZ | vtxO
+-----------------------------
+x | 1.30 | 0.00 | 0.00 | 0.00
+y | 0.00 | 1.73 | 0.00 | 0.00
+z | 0.00 | 0.00 | -1.02 | -2.02
+w | 0.00 | 0.00 | -1.00 | 0.00
+)
+Camera instance destructed
