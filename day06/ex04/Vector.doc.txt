@@ -1,0 +1,47 @@
+
+<- Vector ----------------------------------------------------------------------
+The Vector class handles vectors.
+
+An instance can be contructed from destination vertex
+and optional origin vertex:
+new Vector( array( 'dest' => new Vertex(...), 'orig' => new Vertex(...) ) );
+
+If origin vertex is not supplied, it defaults to [0, 0, 0, 1].
+Any other use is undefined behaviour.
+
+The class provides the following methods :
+
+float   getX();
+float   getY();
+float   getZ();
+float   getW();
+Getters for each coordinate.
+
+float   magnitude();
+Returns the vector’s length (or "norm").
+
+Vector  normalize();
+Returns a normalized version of the vector.
+If the vector is already normalized, returns a fresh copy of the vector.
+
+Vector  add( Vector $rhs );
+Returns the sum vector of both vectors.
+
+Vector  sub( Vector $rhs );
+Returns the difference vector of both vectors.
+
+Vector  opposite();
+Returns the opposite vector.
+
+Vector  scalarProduct( float $k );
+Returns the multiplication of the vector with a scalar.
+
+float   dotProduct( Vector $rhs );
+Returns the scalar multiplication of both vectors.
+
+float   cos( Vector $rhs );
+Returns the angle’sAppendix cosine between both vectors.
+
+Vector  crossProduct( Vector $rhs );
+Returns the cross multiplication of both vectors (right-hand mark!).
+--------------------------------------------------------------------- Vector ->
