@@ -92,7 +92,7 @@ $cube = makeColoredCube( 0.0, 0.0, 0.0, 1.0 );
 $M = $T->mult( $RX )->mult( $RY )->mult( $S );
 $cube = $M->transformMesh( $cube );
 $cube = $cam->watchMesh( $cube );
-$renderer->renderMesh( $cube, Render::RASTERIZE );
+$renderer->renderMesh( $cube, Render::EDGE );
 
 
 $renderer->develop();

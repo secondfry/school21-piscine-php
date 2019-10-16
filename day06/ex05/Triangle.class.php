@@ -43,16 +43,31 @@ class Triangle {
     return ($c->getX() - $a->getX()) * ($b->getY() - $a->getY()) - ($c->getY() - $a->getY()) * ($b->getX() - $a->getX());
   }
 
-  public function isVertexOnEdge(Vertex $point): array {
-    $BC = $this->_isVertexOnEdgeInternal($this->_B, $this->_C, $point);
+  public function isVertexInside(Vertex $point): bool {
+    $w0 = Triangle::edgeFunction($this->_A, $this->_B, $point);
+    $w1 = Triangle::edgeFunction($this->_B, $this->_C, $point);
+    $w2 = Triangle::edgeFunction($this->_C, $this->_A, $point);
+    if ($w0 >= 0 && $w1 >= 0 && $w2 >= 0) {
+      return true;
+    }
 
-    if ($BC['status']) {
+    return false;
+  }
+
+  public function isVertexOnEdge(Vertex $point): array {
+    if (!$this->isVertexInside($point)) {
+      return [
+        'status' => false
+      ];
+    }
+
+    $BC = $this->_isVertexOnEdgeInternal($this->_B, $this->_C, $point);
+    if ($BC['status'] === true) {
       return $BC;
     }
 
     $CA = $this->_isVertexOnEdgeInternal($this->_C, $this->_A, $point);
-
-    if ($CA['status']) {
+    if ($CA['status'] === true) {
       return $CA;
     }
 
@@ -61,24 +76,17 @@ class Triangle {
   }
 
   private function _isVertexOnEdgeInternal(Vertex $a, Vertex $b, Vertex $point): array {
-    $w = Triangle::edgeFunction($a, $point, $b);
-
-    if (
-      $w < -1
-      || 1 < $w
-      || ($a->getX() === $b->getX() && $a->getY() === $b->getY())
-    ) {
+    $w = Triangle::edgeFunction($a, $b, $point);
+    if (abs($w) < 10) {
       return [
-        'status' => false,
+        'status' => true,
         'weight' => $w,
-        'vertexes' => [],
+        'vertexes' => [$a, $b]
       ];
     }
 
     return [
-      'status' => true,
-      'weight' => $w,
-      'vertexes' => [$a, $b],
+      'status' => false
     ];
   }
 

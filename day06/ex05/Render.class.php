@@ -78,17 +78,17 @@ class Render {
       $x = 0;
       while ($x < $this->_width) {
         $vertex = new Vertex(['x' => $x, 'y' => $y]);
-        $onEdge = $triangle->isVertexOnEdge($vertex);
-        if (!$onEdge['status']) {
+        $onEdge = $triangle->isVertexInside($vertex);
+        if (!$onEdge) {
           $x++;
           continue;
         }
 
-        $vertex->setColor(
-          $onEdge['vertexes'][0]->getColor()->average(
-            $onEdge['vertexes'][1]->getColor()
-          )
-        );
+        // $vertex->setColor(
+        //   $onEdge['vertexes'][0]->getColor()->average(
+        //     $onEdge['vertexes'][1]->getColor()
+        //   )
+        // );
 
         $this->renderVertex($vertex);
         unset($vertex, $onEdge);
