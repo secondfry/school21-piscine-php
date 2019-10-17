@@ -110,39 +110,18 @@ class Camera {
   }
 
   public function watchVertex(Vertex $worldVertex): Vertex {
-    echo $worldVertex . "\n";
     $camVertex = $this->_view->transformVertex($worldVertex);
-    // echo $camVertex . "\n";
     $screenVertex = $this->_projection->transformVertex($camVertex);
-    // echo $screenVertex . "\n";
+
     $NDCVertex = new Vertex([
       'x' => $screenVertex->getX() * -1 / $screenVertex->getZ(),
       'y' => $screenVertex->getY() * -1 / $screenVertex->getZ()
     ]);
-    // echo $NDCVertex . "\n";
 
-    // $NDCVertex = new Vertex([
-    //   'x' => ($screenVertex->getX() + $this->_width / 2) / $this->_width,
-    //   'y' => ($screenVertex->getY() + $this->_height / 2) / $this->_height,
-    // ]);
-    // echo $NDCVertex . "\n";
-    // $NDCVertex = $this->_projection->transformVertex($camVertex);
-    // echo $NDCVertex . "\n";
-    // $NDCVertex = $this->_view->transformVertex($this->_projection->transformVertex($worldVertex));
-    // $NDCVertex = $this->_projection->transformVertex($this->_view->transformVertex($worldVertex));
-    // $rasterVertex = clone $NDCVertex;
-    // $ret->setX(($ret->getX() + 1) * $this->_width / 2);
-    // $ret->setY(($ret->getY() - 1) * -1 * $this->_height / 2);
-    
-    $rasterVertex = new Vertex([
-      'x' => ($NDCVertex->getX() - 1) * -1 * $this->_width / 2,
-      'y' => ($NDCVertex->getY() - 1) * -1 * $this->_height / 2,
-    ]);
-    
-    echo $rasterVertex . "\n\n";
-    // echo $ret . "\n\n";
-    // $ret = $rasterVertex;
-    return $rasterVertex;
+    $ret = clone $NDCVertex;
+    $ret->setX(($ret->getX() - 1) * -1 * $this->_width / 2);
+    $ret->setY(($ret->getY() - 1) * -1 * $this->_height / 2);
+    return $ret;
   }
 
   public function watchTriangle(Triangle $worldTriangle): Triangle {
