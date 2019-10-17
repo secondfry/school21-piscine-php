@@ -1,0 +1,45 @@
+
+<- Matrix ----------------------------------------------------------------------
+The Matrix class handles matrixes.
+
+To create an instance you must supply matrix preset which must be
+one of the defined class constants:
+`IDENTITY`, `SCALE`, `RX`, `RY`, `RZ`, `TRANSLATION`, `PROJECTION`.
+
+You also must supply:
+- For `SCALE` preset:
+  - `scale` factor.
+
+- For `RX`, `RY`, `RZ` presets:
+  - `angle` - rotation angle alongside corresponding axis.
+
+- For `TRANSLATION` preset:
+  - `vtc` - translation vector.
+
+- For `PROJECTION` preset:
+  - `fov` - Field-of-View.
+  - `ratio` - desired aspect ratio.
+  - `near` - distance to "near" clipping plane.
+  - `far` - distance to "far" clipping plane.
+
+Examples:
+new Matrix( [
+  'preset': Matrix::SCALE,
+  'scale': 3.0f
+] );
+
+new Matrix( [
+  'preset': Matrix::TRANSLATION,
+  'vtc': new Vector(...)
+] );
+
+Any other use is undefined behaviour.
+
+The class provides the following methods :
+
+Matrix  mult( Matrix $rhs );
+Returns the multiplication of both matrices.
+
+Vertex  transformVertex( Vertex $vtx );
+Returns new vertex transformed by the current matrix.
+--------------------------------------------------------------------- Matrix ->
