@@ -61,6 +61,7 @@ class Render {
         $this->_renderTriangleByVertex($triangle);
         return;
       case Render::EDGE:
+      case Render::RASTERIZE:
         $this->_renderTriangleByEdge($triangle);
         return;
     }
@@ -73,30 +74,55 @@ class Render {
   }
 
   private function _renderTriangleByEdge(Triangle $triangle): void {
-    $y = 0;
-    while ($y < $this->_height) {
-      $x = 0;
-      while ($x < $this->_width) {
-        $vertex = new Vertex(['x' => $x, 'y' => $y]);
-        $onEdge = $triangle->isVertexInside($vertex);
-        if (!$onEdge) {
-          $x++;
-          continue;
-        }
+    // FIXME remove this and replace it with commnected code below
+    imageline(
+      $this->_image,
+      $triangle->getA()->getX(),
+      $triangle->getA()->getY(),
+      $triangle->getB()->getX(),
+      $triangle->getB()->getY(),
+      $triangle->getA()->getColor()->toPngColor($this->_image)
+    );
+    imageline(
+      $this->_image,
+      $triangle->getB()->getX(),
+      $triangle->getB()->getY(),
+      $triangle->getC()->getX(),
+      $triangle->getC()->getY(),
+      $triangle->getB()->getColor()->toPngColor($this->_image)
+    );
+    imageline(
+      $this->_image,
+      $triangle->getC()->getX(),
+      $triangle->getC()->getY(),
+      $triangle->getA()->getX(),
+      $triangle->getA()->getY(),
+      $triangle->getC()->getColor()->toPngColor($this->_image)
+    );
+    // $y = 0;
+    // while ($y < $this->_height) {
+    //   $x = 0;
+    //   while ($x < $this->_width) {
+    //     $vertex = new Vertex(['x' => $x, 'y' => $y]);
+    //     $onEdge = $triangle->isVertexOnEdge($vertex);
+    //     if (!$onEdge['status']) {
+    //       $x++;
+    //       continue;
+    //     }
 
-        // $vertex->setColor(
-        //   $onEdge['vertexes'][0]->getColor()->average(
-        //     $onEdge['vertexes'][1]->getColor()
-        //   )
-        // );
+    //     $vertex->setColor(
+    //       $onEdge['vertexes'][0]->getColor()->average(
+    //         $onEdge['vertexes'][1]->getColor()
+    //       )
+    //     );
 
-        $this->renderVertex($vertex);
-        unset($vertex, $onEdge);
+    //     $this->renderVertex($vertex);
+    //     unset($vertex, $onEdge);
 
-        $x++;
-      }
-      $y++;
-    }
+    //     $x++;
+    //   }
+    //   $y++;
+    // }
   }
 
   public function renderMesh(array $triangles, int $mode): void {

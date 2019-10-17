@@ -106,9 +106,15 @@ class Camera {
 
   public function watchVertex(Vertex $worldVertex): Vertex {
     $camVertex = $this->_view->transformVertex($worldVertex);
-    $NDCVertex = $this->_projection->transformVertex($camVertex);
+    $screenVertex = $this->_projection->transformVertex($camVertex);
+
+    $NDCVertex = new Vertex([
+      'x' => $screenVertex->getX() * -1 / $screenVertex->getZ(),
+      'y' => $screenVertex->getY() * -1 / $screenVertex->getZ()
+    ]);
+
     $ret = clone $NDCVertex;
-    $ret->setX(($ret->getX() + 1) * $this->_width / 2);
+    $ret->setX(($ret->getX() - 1) * -1 * $this->_width / 2);
     $ret->setY(($ret->getY() - 1) * -1 * $this->_height / 2);
     return $ret;
   }
