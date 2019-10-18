@@ -1,11 +1,17 @@
 <?php
 
-$user = $_POST['login'];
-$pass_old = $_POST['oldpw'];
-$pass_new = $_POST['newpw'];
-$salt = $_POST['submit'];
+$user = $_POST['login'] ?? '';
+$pass_old = $_POST['oldpw'] ?? '';
+$pass_new = $_POST['newpw'] ?? '';
+$salt = $_POST['submit'] ?? '';
 
-if (!$user || !$pass_old || !$pass_new || !$salt || $salt !== 'OK') {
+if (
+  $user === ''
+  || $pass_old === ''
+  || $pass_new === ''
+  || $salt === ''
+  || $salt !== 'OK'
+) {
   echo 'ERROR' . "\n";
   return;
 }

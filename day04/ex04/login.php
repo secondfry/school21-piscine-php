@@ -4,8 +4,8 @@ include_once 'auth.php';
 
 session_start();
 
-$user = $_POST['login'];
-$pass = $_POST['passwd'];
+$user = $_POST['login'] ?? '';
+$pass = $_POST['passwd'] ?? '';
 
 if (!auth($user, $pass)) {
   $_SESSION['loggued_on_user'] = '';
