@@ -1,0 +1,10 @@
+# IHasName
+Interface for things which have name.
+
+public
+function getName(): string;
+Returns entities entity name.
+
+public
+function getDefaultName(): string;
+Returns entities default name.

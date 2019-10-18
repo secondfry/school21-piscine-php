@@ -1,0 +1,6 @@
+# IHasPowerShields
+Interface for things which have power and shields.
+
+public
+function powerToShields(): bool;
+Returns if transfer was successful.

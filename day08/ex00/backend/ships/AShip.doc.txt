@@ -1,0 +1,12 @@
+# AShip
+Implements JsonSerializable, ITurnBased, IHasHull, IHasPowerShields,
+IHasMovement, IHasLocationSize, IHasName interfaces which are documented
+by themselves.
+
+public
+function getPlayerID(): int;
+Returns owner player ID.
+
+public
+function getID(): int;
+Return entity ID.

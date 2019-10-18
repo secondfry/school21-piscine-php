@@ -1,0 +1,14 @@
+# IHasPower
+Interface for things which have hull points.
+
+public
+function getDefaultPower(): int;
+Returns amount of entities default power points.
+
+public
+function getCurrentPower(): int;
+Returns amount of entities current power points.
+
+public
+function resetPower(): void;
+Resets power to maximum value.

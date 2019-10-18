@@ -1,0 +1,29 @@
+# IHasMovement
+Interface for things which have movement points.
+
+public
+function getDefaultHandling(): int;
+Returns amount of entities default handling value.
+
+public
+function getHandling(): int;
+Returns amount of entities handling value.
+
+public
+function getDefaultMovement(): int;
+Returns amount of entities default movement points.
+
+public
+function getCurrentMomement(): int;
+Returns amount of entities current movement points.
+
+public
+function resetMovement(): void;
+Resets movement to maximum value and checks if ships was moving last turn.
+
+public
+function canMoveTo(
+  int $x,
+  int $y
+): bool;
+Returns if entity can move to supplied coordinates.

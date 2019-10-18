@@ -1,0 +1,18 @@
+# IHasLocation
+Interface for things which have location on playing field.
+
+public
+function getX(): int;
+Returns entities x coordinate.
+
+public
+function getY(): int;
+Returns entities y coordinate.
+
+public
+function isOnXY(
+  int $x,
+  int $y
+): bool;
+Takes x and y coordinates.
+Returns if entity is located on requested coordinates.

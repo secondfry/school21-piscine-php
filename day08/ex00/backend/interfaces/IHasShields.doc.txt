@@ -1,0 +1,14 @@
+# IHasShields
+Interface for things which have hull points.
+
+public
+function getDefaultShields(): int;
+Returns amount of entities default shield points.
+
+public
+function getCurrentShields(): int;
+Returns amount of entities current shield points.
+
+public
+function resetShields(): void;
+Resets shield points to maximum value.

@@ -1,0 +1,18 @@
+# IHasSize
+Interface for things which have width and height.
+
+public
+function getDefaultWidth(): int;
+Returns entities default width.
+
+public
+function getWidth(): int;
+Returns entities current width.
+
+public
+function getDefaultHeight(): int;
+Returns entities default height.
+
+public
+function getHeight(): int;
+Returns entities current height.
