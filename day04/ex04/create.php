@@ -1,10 +1,10 @@
 <?php
 
-$user = $_POST['login'];
-$pass = $_POST['passwd'];
-$salt = $_POST['submit'];
+$user = $_POST['login'] ?? '';
+$pass = $_POST['passwd'] ?? '';
+$salt = $_POST['submit'] ?? '';
 
-if (!$user || !$pass || !$salt || $salt !== 'OK') {
+if ($user === '' || $pass === '' || $salt === '' || $salt !== 'OK') {
   echo 'ERROR' . "\n";
   return;
 }

@@ -1,0 +1,6 @@
+# IHasPowerShields
+Interface for things which have power and movement.
+
+public
+function powerToMovement(): bool;
+Returns if transfer was successful.

@@ -1,0 +1,6 @@
+# IHasLocationSize
+Interface for things which have location and size.
+
+public
+function getBounds(): array;
+Returns array with xMin, xMax, yMin, Ymax coordinates for ship.

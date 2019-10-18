@@ -1,0 +1,6 @@
+# ITurnBased
+Interface for things which do something each turn automatically.
+
+public
+function reset(): void;
+Resets entity state to reflect fresh turn starting.

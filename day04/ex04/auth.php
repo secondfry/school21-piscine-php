@@ -1,7 +1,10 @@
 <?php
 
 function auth($login, $passwd) {
-  if (!$login || !$passwd) {
+  if (
+    $login === ''
+    || $passwd === ''
+  ) {
     return FALSE;
   }
 

@@ -1,0 +1,14 @@
+# IHasHull
+Interface for things which have hull points.
+
+public
+function getDefaultHull(): int;
+Returns amount of entities default entity hull points.
+
+public
+function getCurrentHull(): int;
+Returns amount of entities current entity hull points.
+
+public
+function resetHull(): void;
+Resets hull points to maximum value.

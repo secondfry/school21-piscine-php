@@ -11,9 +11,9 @@ if (!$user) {
   return;
 }
 
-$msg = $_POST['msg'];
+$msg = $_POST['msg'] ?? '';
 
-if ($msg) {
+if ($msg !== '') {
   save_message($msg);
 }
 
