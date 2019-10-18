@@ -1,9 +1,21 @@
 <?php
 
 require_once 'AShip.class.php';
+require_once __DIR__ . '/../weapons/SmallPulseLaser.class.php';
 
 class AmarrFrigate extends AShip
 {
+  public
+  function __construct(
+    $id,
+    $pid,
+    $x,
+    $y
+  ) {
+    $this -> _weapon = new SmallPulseLaser();
+    parent ::__construct($id, $pid, $x, $y);
+  }
+
 
   public
   function getDefaultName(): string
