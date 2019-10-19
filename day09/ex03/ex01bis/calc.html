@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  html {
+    background: #333;
+  }
+  #body {
+    display: grid;
+    height: 98vh;
+    justify-content: center;
+    align-content: center;
+  }
+</style>
+</head>
+<body id="body">
+  <div id="calc">
+    <form id="form">
+      <input type="number" id="left">
+      <select id="operation">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="%">%</option>
+      </select>
+      <input type="number" id="right">
+      <input type="submit" value="Try me!">
+    </form>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+  const form = $('#form');
+
+  form.submit(function (e) {
+    e.preventDefault();
+
+    const left = $('#left').val();
+    const leftInt = parseInt(left);
+    if (left != leftInt) {
+      alert('Error :(');
+      return;
+    }
+
+    const right = $('#right').val();
+    const rightInt = parseInt(right);
+    if (right != rightInt) {
+      alert('Error :(');
+      return;
+    }
+
+    const operation = $('#operation').val();
+
+    if (
+      left < 0
+      || right < 0
+    ) {
+      alert('Error :(');
+      return;
+    }
+
+    let result;
+    switch (operation) {
+      case '+':
+        result = leftInt + rightInt;
+        break;
+      case '-':
+        result = leftInt - rightInt;
+        break;
+      case '*':
+        result = leftInt * rightInt;
+        break;
+      case '/':
+        if (rightInt === 0) {
+          result = 'It’s over 9000!';
+          break;
+        }
+
+        result = leftInt / rightInt;
+        break;
+      case '%':
+        if (rightInt === 0) {
+          result = 'It’s over 9000!';
+          break;
+        }
+
+        result = leftInt % rightInt;
+        break;
+    }
+
+    alert(result);
+    console.log(result);
+  });
+
+  const please = () => {
+    alert('Please, use me...');
+
+    setTimeout(please, 30000);
+  }
+
+  setTimeout(please, 30000);
+</script>
+</body>
+</html>

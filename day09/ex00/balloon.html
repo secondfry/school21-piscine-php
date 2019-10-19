@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  html {
+    background: #333;
+  }
+  #body {
+    display: grid;
+    height: 98vh;
+    justify-content: center;
+    align-content: center;
+  }
+  #balloon {
+    height: 200px;
+    width: 200px;
+    background: #f00;
+    border-radius: 50%;
+    transition: all 0.1s ease-in-out;
+  }
+</style>
+</head>
+<body id="body">
+  <div id="balloon"></div>
+
+<script>
+  const color = {0: '#f00', 1: '#0f0', 2: '#00f'};
+  let phase = 0;
+  const balloon = document.getElementById('balloon');
+
+  balloon.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (this.clientWidth >= 410) {
+      this.style.width = 200 + 'px';
+      this.style.height = 200 + 'px';
+
+      phase = 0;
+    } else {
+      const newSize = this.clientWidth + 10 + 'px';
+      this.style.width = newSize;
+      this.style.height = newSize;
+
+      phase += 1;
+      if (phase === 3) {
+        phase = 0;
+      }
+    }
+
+    this.style.backgroundColor = color[phase];
+  });
+
+  balloon.addEventListener('mouseout', function (e) {
+    e.preventDefault();
+
+    if (this.clientWidth <= 200) {
+      this.style.width = 200 + 'px';
+      this.style.height = 200 + 'px';
+    } else {
+      const newSize = this.clientWidth - 5 + 'px';
+      this.style.width = newSize;
+      this.style.height = newSize;
+    }
+
+    phase -= 1;
+    if (phase === -1) {
+      phase = 2;
+    }
+
+    this.style.backgroundColor = color[phase];
+  });
+</script>
+</body>
+</html>
