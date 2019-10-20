@@ -16,7 +16,7 @@ services:
     build: ../docker
     restart: always
     ports:
-      - 8000:8000
+     - 8000:8000
     volumes:
      - .:/usr/src/myapp
     working_dir: /usr/src/myapp/dest
@@ -24,6 +24,8 @@ services:
       MONGODB_ADMINUSERNAME: root
       MONGODB_ADMINPASSWORD: verynicepassword
     command: php -S 0.0.0.0:8000 -t . backend/index.php
+    links:
+      - mongo
 
   composer:
     build: ../docker
