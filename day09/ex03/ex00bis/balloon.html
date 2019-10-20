@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  html {
+    background: #333;
+  }
+  #body {
+    display: grid;
+    height: 98vh;
+    justify-content: center;
+    align-content: center;
+  }
+  #balloon {
+    height: 200px;
+    width: 200px;
+    background: #f00;
+    border-radius: 50%;
+    transition: all 0.1s ease-in-out;
+  }
+</style>
+</head>
+<body id="body">
+  <div id="balloon"></div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+<script>
+  const color = {0: '#f00', 1: '#0f0', 2: '#00f'};
+  let phase = 0;
+  const balloon = $('#balloon');
+
+  balloon.click(function (e) {
+    e.preventDefault();
+
+    if ($(this).width() >= 410) {
+      $(this).width(200);
+      $(this).height(200);
+
+      phase = 0;
+    } else {
+      const newSize = $(this).width() + 10;
+      $(this).width(newSize);
+      $(this).height(newSize);
+
+      phase += 1;
+      if (phase === 3) {
+        phase = 0;
+      }
+    }
+
+    $(this).css('backgroundColor', color[phase]);
+  });
+
+  balloon.mouseout(function (e) {
+    e.preventDefault();
+
+    if ($(this).width() <= 200) {
+      $(this).width(200);
+      $(this).height(200);
+    } else {
+      const newSize = $(this).width() - 5;
+      $(this).width(newSize);
+      $(this).height(newSize);
+    }
+
+    phase -= 1;
+    if (phase === -1) {
+      phase = 2;
+    }
+
+    $(this).css('backgroundColor', color[phase]);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  html {
+    background: #333;
+  }
+  #body {
+    display: grid;
+    height: 98vh;
+    justify-content: center;
+    align-content: center;
+  }
+</style>
+</head>
+<body id="body">
+  <div id="calc">
+    <form id="form">
+      <input type="number" id="left">
+      <select id="operation">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="%">%</option>
+      </select>
+      <input type="number" id="right">
+      <input type="submit" value="Try me!">
+    </form>
+  </div>
+
+<script>
+  const form = document.getElementById('form');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const left = document.getElementById('left').valueAsNumber;
+    const operation = document.getElementById('operation').value;
+    const right = document.getElementById('right').valueAsNumber;
+
+    if (
+      !Number.isInteger(left)
+      || !Number.isInteger(right)
+      || left < 0
+      || right < 0
+    ) {
+      alert('Error :(');
+      return;
+    }
+
+    let result;
+    switch (operation) {
+      case '+':
+        result = left + right;
+        break;
+      case '-':
+        result = left - right;
+        break;
+      case '*':
+        result = left * right;
+        break;
+      case '/':
+        if (right === 0) {
+          result = 'It’s over 9000!';
+          break;
+        }
+
+        result = left / right;
+        break;
+      case '%':
+        if (right === 0) {
+          result = 'It’s over 9000!';
+          break;
+        }
+
+        result = left % right;
+        break;
+    }
+
+    alert(result);
+    console.log(result);
+  });
+
+  const please = () => {
+    alert('Please, use me...');
+
+    setTimeout(please, 30000);
+  }
+
+  setTimeout(please, 30000);
+</script>
+</body>
+</html>
