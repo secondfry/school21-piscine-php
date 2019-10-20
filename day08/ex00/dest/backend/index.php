@@ -70,10 +70,21 @@ $app -> get(
     $session = new \SlimSession\Helper();
 
     $game = new Game();
-    $payload = $game;
+
+    $id =
+      MDB ::get() -> games -> insertOne(
+        $game -> jsonSerialize(),
+        ['upsert' => true]
+      ) -> getInsertedId();
 
     $response -> getBody() -> write(
-      json_encode($payload, JSON_UNESCAPED_UNICODE)
+      json_encode(
+        [
+          'id'   => $id,
+          'game' => $game
+        ],
+        JSON_UNESCAPED_UNICODE
+      )
     );
 
     return $response;

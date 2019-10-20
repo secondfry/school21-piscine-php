@@ -178,13 +178,25 @@ class GameState implements ITurnBased, JsonSerializable
   public
   function jsonSerialize()
   {
-    return [
-      'phase' => $this->_phase,
-      'players' => $this->_players,
-      'currentPlayer' => $this->_currentPlayerID,
-      'currentShipID' => $this->_currentShipID,
-      'status' => $this->_status,
+    $ret = [
+      'phase'         => $this -> _phase,
+      'players'       => [],
+      'currentPlayer' => $this -> _currentPlayerID,
+      'currentShipID' => $this -> _currentShipID,
+      'status'        => $this -> _status,
     ];
+    foreach ($this -> _players as $player) {
+      $retP = [
+        'id'    => $player['id'],
+        'ships' => [],
+      ];
+      foreach ($player['ships'] as $ship) {
+        /** @var AShip $ship */
+        $retP['ships'][] = $ship -> jsonSerialize();
+      }
+      $ret['players'][] = $retP;
+    }
+    return $ret;
   }
 
 }

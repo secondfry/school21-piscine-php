@@ -105,8 +105,8 @@ class Game implements JsonSerializable
   function jsonSerialize()
   {
     return [
-      'field' => $this -> _field,
-      'state' => $this -> _state,
+      'field' => $this -> _field -> jsonSerialize(),
+      'state' => $this -> _state -> jsonSerialize(),
     ];
   }
 }
