@@ -3,6 +3,7 @@
         "slim/slim": "^4.3",
         "slim/psr7": "^0.6.0",
         "bryanjhv/slim-session": "^4.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "mongodb/mongodb": "^1.5"
     }
 }
