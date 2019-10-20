@@ -6,7 +6,7 @@ class MDB {
   function get() {
     $mongo = new MongoDB\Client(
       sprintf(
-        'mongodb://%s:%s@172.19.0.3:27017',
+        'mongodb://%s:%s@172.19.0.5:27017',
         $_ENV['MONGODB_ADMINUSERNAME'],
         $_ENV['MONGODB_ADMINPASSWORD']
       )

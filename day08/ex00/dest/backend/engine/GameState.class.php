@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../interfaces/DBStorable.interface.php';
 require_once __DIR__ . '/../ships/AShip.class.php';
 
 class GameState implements ITurnBased, JsonSerializable
@@ -17,6 +18,32 @@ class GameState implements ITurnBased, JsonSerializable
   private int   $_currentShipID   = 0;
 
   private string $_status = '';
+
+  public static
+  function recreate(
+    $data
+  ) {
+    $ret = new GameState();
+
+    $ret -> _phase           = $data['phase'];
+    $ret -> _currentPlayerID = $data['currentPlayerID'];
+    $ret -> _currentShipID   = $data['currentShipID'];
+    $ret -> _status          = $data['status'];
+
+    foreach ($data['players'] as $playerData) {
+      foreach ($playerData['ships'] as $shipData) {
+        // well
+        // we have to recreate object of exact class
+        // because we can't instantiate abstract AShip
+        // so we have to store ship type
+        // and it probably requires reflection
+        // so...
+        // FIXME it's broken Kevin
+      }
+    }
+
+    return $ret;
+  }
 
   public
   function addPlayer(
@@ -179,11 +206,11 @@ class GameState implements ITurnBased, JsonSerializable
   function jsonSerialize()
   {
     $ret = [
-      'phase'         => $this -> _phase,
-      'players'       => [],
-      'currentPlayer' => $this -> _currentPlayerID,
-      'currentShipID' => $this -> _currentShipID,
-      'status'        => $this -> _status,
+      'phase'           => $this -> _phase,
+      'players'         => [],
+      'currentPlayerID' => $this -> _currentPlayerID,
+      'currentShipID'   => $this -> _currentShipID,
+      'status'          => $this -> _status,
     ];
     foreach ($this -> _players as $player) {
       $retP = [

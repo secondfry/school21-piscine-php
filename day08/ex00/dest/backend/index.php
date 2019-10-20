@@ -42,7 +42,13 @@ $customErrorHandler = function (
     return $response;
   }
 
-  $payload = ['error' => $exception -> getMessage()];
+  $payload =
+    [
+      'error' => $exception -> getMessage(),
+      'file'  => $exception -> getFile(),
+      'line'  => $exception -> getLine(),
+      'trace' => $exception -> getTrace(),
+    ];
 
   $response -> getBody() -> write(
     json_encode($payload, JSON_UNESCAPED_UNICODE)
@@ -69,13 +75,15 @@ $app -> get(
   function (Request $request, Response $response, array $args) {
     $session = new \SlimSession\Helper();
 
-    $game = new Game();
+    $game = Game::constructPreset();
 
     $id =
       MDB ::get() -> games -> insertOne(
         $game -> jsonSerialize(),
         ['upsert' => true]
       ) -> getInsertedId();
+
+    $game = Game::recreate(['id' => $id]);
 
     $response -> getBody() -> write(
       json_encode(
@@ -92,23 +100,7 @@ $app -> get(
 );
 
 $app -> get(
-  '/play',
-  function (Request $request, Response $response, array $args) {
-    $session = new \SlimSession\Helper();
-
-    /** @var Game $game */
-    $game = $session -> get('game');
-
-    $game -> play();
-
-    $ret = $game -> render();
-    $response -> getBody() -> write($ret);
-    return $response;
-  }
-);
-
-$app -> get(
-  '/select/{shipID:[0-9]+}',
+  '/api/select/{shipID:[0-9]+}',
   function (Request $request, Response $response, array $args) {
     $session = new \SlimSession\Helper();
 
@@ -122,7 +114,7 @@ $app -> get(
 );
 
 $app -> get(
-  '/move/{x:[0-9]+}/{y:[0-9]+}',
+  '/api/move/{x:[0-9]+}/{y:[0-9]+}',
   function (Request $request, Response $response, array $args) {
     $session = new \SlimSession\Helper();
 
@@ -139,7 +131,7 @@ $app -> get(
 );
 
 $app -> get(
-  '/attack/{x:[0-9]+}/{y:[0-9]+}',
+  '/api/attack/{x:[0-9]+}/{y:[0-9]+}',
   function (Request $request, Response $response, array $args) {
     $session = new \SlimSession\Helper();
 
