@@ -40,6 +40,9 @@ class AShip
   private int  $_movementCore          = 0;
   private int  $_movementCur           = 0;
 
+  private bool $_hasMoved    = false;
+  private bool $_hasAttacked = false;
+
   private int $_playerID = 0;
 
   protected AWeapon $_weapon;
@@ -64,6 +67,7 @@ class AShip
     $this -> _playerID     = $playerID;
     $this -> _id           = $id;
     $this -> _rotation     = AShip::FLAT;
+    $this -> _hullCur      = $this -> _hullCore;
     $this -> reset();
   }
 
@@ -73,6 +77,9 @@ class AShip
     $this -> resetPower();
     $this -> resetShields();
     $this -> resetMovement();
+
+    $this -> _hasMoved    = false;
+    $this -> _hasAttacked = false;
   }
 
   public
@@ -270,9 +277,12 @@ class AShip
     int $y,
     GameField $field
   ): bool {
+    if ($this -> _hasMoved) {
+      return false;
+    }
+
     switch ($this -> _rotation) {
       case AShip::FLAT:
-        var_dump($x - $this -> _locationX);
         if (abs($x - $this -> _locationX) < $this -> _handling) {
           return false;
         }
@@ -313,6 +323,9 @@ class AShip
 
     $this -> _locationX = $x;
     $this -> _locationY = $y;
+
+    $this -> _hasMoved = true;
+
     return true;
   }
 
@@ -321,6 +334,10 @@ class AShip
     int $x,
     int $y
   ): bool {
+    if ($this -> _hasAttacked) {
+      return false;
+    }
+
     if (!$this -> _weapon) {
       return false;
     }
@@ -343,6 +360,8 @@ class AShip
     }
 
     $other -> receiveDamage(1);
+
+    $this -> _hasAttacked = true;
     return true;
   }
 
@@ -353,9 +372,20 @@ class AShip
     $this -> _shieldsCur -= $damage;
 
     if ($this -> _shieldsCur < 0) {
-      $this -> _shieldsCur = 0;
       $this -> _hullCur    += $this -> _shieldsCur;
+      $this -> _shieldsCur = 0;
     }
+
+    if ($this -> _hullCur < 0) {
+      // TODO remove ship
+      $this -> _hullCur = 0;
+    }
+  }
+
+  public
+  function hasActions(): bool
+  {
+    return !$this -> _hasAttacked || !$this -> _hasMoved;
   }
 
 }

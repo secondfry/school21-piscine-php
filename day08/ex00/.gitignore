@@ -131,4 +131,3 @@ sftp-config.json
 /dest/*
 !/dest/backend/
 !/dest/index-view.html
-

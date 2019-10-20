@@ -1,55 +1,101 @@
 <?php
 
+use MongoDB\BSON\ObjectId;
+
+require_once __DIR__ . '/../interfaces/DBStorable.interface.php';
 require_once __DIR__ . '/../ships/AShip.class.php';
 
-class GameState implements ITurnBased
+class GameState implements ITurnBased, JsonSerializable
 {
+
+  private ObjectId $_id;
 
   const PHASE_SELECT_PLAYER = 1;
   const PHASE_SELECT_SHIP   = 2;
   const PHASE_USE_SHIP      = 3;
   const PHASE_RESET         = 4;
+  const PHASE_VICTORY       = 5;
 
   private int   $_phase = GameState::PHASE_SELECT_PLAYER;
 
-  private array $_players       = [];
-  private int   $_currentPlayer = 0;
-  private int   $_currentShipID = 0;
+  private array $_players         = [];
+  private int   $_currentPlayerID = 0;
+  private int   $_currentShipID   = 0;
 
   private string $_status = '';
+
+  public
+  function __construct()
+  {
+    $this -> _id = new ObjectId();
+  }
+
+  public
+  function store(): void
+  {
+    MDB ::get() -> states -> updateOne(
+      [
+        '_id' => $this -> _id,
+      ],
+      [
+        '$set' => [
+          '_id'  => $this -> _id,
+          'data' => serialize($this)
+        ]
+      ],
+      ['upsert' => true]
+    );
+  }
+
+  public static
+  function recreate(
+    string $id
+  ): GameState {
+    $data  = MDB ::get() -> states -> findOne(['_id' => $id]);
+    $state = unserialize($data['data']);
+    return $state;
+  }
 
   public
   function addPlayer(
     bool $setCurrent = false
   ): int {
-    $id                    = count($this -> _players) + 1;
+    $id                    = strval(count($this -> _players) + 1);
     $this -> _players[$id] = [
       'id'    => $id,
       'ships' => [],
     ];
 
     if ($setCurrent) {
-      $this -> _currentPlayer = $id;
+      $this -> _currentPlayerID = $id;
     }
 
     return $id;
   }
 
   public
-  function getCurrentPlayer(): int
+  function getCurrentPlayerID(): int
   {
-    return $this -> _currentPlayer;
+    return $this -> _currentPlayerID;
+  }
+
+  public
+  function setCurrentPlayerID(
+    int $val
+  ): GameState {
+    $this -> _currentPlayerID = $val;
+    return $this;
   }
 
   public
   function nextPlayer(): GameState
   {
     foreach ($this -> _players as $player) {
-      if ($player['id'] === $this -> _currentPlayer) {
+      if ($player['id'] == $this -> _currentPlayerID) {
         continue;
       }
 
-      $this -> _currentPlayer = $player['id'];
+      $this -> _currentPlayerID = $player['id'];
       return $this;
     }
 
@@ -72,7 +118,7 @@ class GameState implements ITurnBased
       case GameState::PHASE_SELECT_SHIP:
         $this -> _status = sprintf(
           'Игрок #%d выберите свой корабль.',
-          $this -> _currentPlayer
+          $this -> _currentPlayerID
         );
         break;
     }
@@ -103,7 +149,7 @@ class GameState implements ITurnBased
   function addShip(
     AShip $ship
   ): GameState {
-    $this -> _players[$this -> _currentPlayer]['ships'][] = $ship;
+    $this -> _players[$this -> _currentPlayerID]['ships'][] = $ship;
     return $this;
   }
 
@@ -129,7 +175,7 @@ class GameState implements ITurnBased
       foreach ($player['ships'] as $ship) {
         /** @var AShip $ship */
         if ($ship -> getID() === $id) {
-          if ($ship -> getPlayerID() !== $this -> _currentPlayer) {
+          if ($ship -> getPlayerID() !== $this -> _currentPlayerID) {
             $this -> _status = 'Вы не можете выбрать чужой корабль.';
             return false;
           }
@@ -173,6 +219,100 @@ class GameState implements ITurnBased
         $ship -> reset();
       }
     }
+  }
+
+  public
+  function jsonSerialize()
+  {
+    $ret = [
+      'phase'           => $this -> _phase,
+      'players'         => [],
+      'currentPlayerID' => $this -> _currentPlayerID,
+      'currentShipID'   => $this -> _currentShipID,
+      'status'          => $this -> _status,
+    ];
+    foreach ($this -> _players as $player) {
+      $retP = [
+        'id'    => $player['id'],
+        'ships' => [],
+      ];
+      foreach ($player['ships'] as $ship) {
+        /** @var AShip $ship */
+        $retP['ships'][] = $ship -> jsonSerialize();
+      }
+      $ret['players'][] = $retP;
+    }
+    return $ret;
+  }
+
+  public
+  function checkVictory(): bool
+  {
+    foreach ($this -> _players as $player) {
+      $touched  = false;
+      $finished = true;
+
+      foreach ($player['ships'] as $ship) {
+        if (!$touched) {
+          $touched = true;
+        }
+
+        /** @var AShip $ship */
+        if ($ship -> getCurrentHull() > 0) {
+          $finished = false;
+          break;
+        }
+      }
+
+      if ($touched && $finished) {
+        $this -> _status = 'Победа, победа, вместо обеда...';
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkPlayers(): bool
+  {
+    foreach ($this -> _players as $player) {
+      if ($this -> checkPlayer($player)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkPlayer(
+    array $player = null
+  ) {
+    if (!$player) {
+      $player = $this -> _players[$this -> _currentPlayerID];
+
+    }
+
+    foreach ($player['ships'] as $ship) {
+      /** @var AShip $ship */
+      if ($ship -> hasActions()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkShip(): bool
+  {
+    $ship = $this -> getCurrentShip();
+    if (!$ship) {
+      return false;
+    }
+
+    return $ship -> hasActions();
   }
 
 }
