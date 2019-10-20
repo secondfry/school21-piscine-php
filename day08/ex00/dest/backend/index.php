@@ -70,9 +70,13 @@ $app -> get(
     $session = new \SlimSession\Helper();
 
     $game = new Game();
-    $session -> set('game', $game);
+    $payload = $game;
 
-    return $response -> withHeader('Location', '/play');
+    $response -> getBody() -> write(
+      json_encode($payload, JSON_UNESCAPED_UNICODE)
+    );
+
+    return $response;
   }
 );
 

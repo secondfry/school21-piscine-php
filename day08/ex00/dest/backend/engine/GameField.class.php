@@ -1,6 +1,6 @@
 <?php
 
-class GameField
+class GameField implements JsonSerializable
 {
 
   private int $_width  = 20;
@@ -22,6 +22,15 @@ class GameField
   function getHeight(): int
   {
     return $this -> _height;
+  }
+
+  public
+  function jsonSerialize()
+  {
+    return [
+      'width'  => $this -> _width,
+      'height' => $this -> _height,
+    ];
   }
 
 }

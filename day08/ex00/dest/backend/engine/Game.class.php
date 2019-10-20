@@ -3,7 +3,7 @@
 require_once __DIR__ . '/GameField.class.php';
 require_once __DIR__ . '/GameState.class.php';
 
-class Game
+class Game implements JsonSerializable
 {
 
   private GameField $_field;
@@ -101,4 +101,12 @@ class Game
     );
   }
 
+  public
+  function jsonSerialize()
+  {
+    return [
+      'field' => $this -> _field,
+      'state' => $this -> _state,
+    ];
+  }
 }
