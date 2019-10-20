@@ -33,12 +33,14 @@ interface IHasMovement
   /**
    * @param int $x x coordinate
    * @param int $y y coordinate
+   * @param GameField $field game field
    * @return bool if entity can move to supplied coordinates
    */
   public
   function canMoveTo(
     int $x,
-    int $y
+    int $y,
+    GameField $field
   ): bool;
 
 }

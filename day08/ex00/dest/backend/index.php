@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\Session as SessionMiddleware;
@@ -19,17 +20,52 @@ $app -> add(
   )
 );
 
+$customErrorHandler = function (
+  ServerRequestInterface $request,
+  Throwable $exception,
+  bool $displayErrorDetails,
+  bool $logErrors,
+  bool $logErrorDetails
+) use ($app) {
+  $response = $app -> getResponseFactory() -> createResponse();
+
+  $filepath = __DIR__ . '/../' . $request -> getUri() -> getPath();
+  if (file_exists($filepath) && is_file($filepath)) {
+    $arr      = explode('.', $filepath);
+    $filetype = $arr[count($arr) - 1];
+    switch ($filetype) {
+      case 'css':
+        $response = $response -> withHeader('Content-Type', 'text/css');
+        break;
+    }
+    $response -> getBody() -> write(file_get_contents($filepath));
+    return $response;
+  }
+
+  $payload = ['error' => $exception -> getMessage()];
+
+  $response -> getBody() -> write(
+    json_encode($payload, JSON_UNESCAPED_UNICODE)
+  );
+
+  return $response;
+};
+
+// Add Error Middleware
+$errorMiddleware = $app -> addErrorMiddleware(true, true, true);
+$errorMiddleware -> setDefaultErrorHandler($customErrorHandler);
+
 $app -> get(
   '/',
   function (Request $request, Response $response, array $args) {
-    $html = file_get_contents(__DIR__ . '/../index.html');
+    $html = file_get_contents(__DIR__ . '/../index-view.html');
     $response -> getBody() -> write($html);
     return $response;
   }
 );
 
 $app -> get(
-  '/create',
+  '/api/create',
   function (Request $request, Response $response, array $args) {
     $session = new \SlimSession\Helper();
 

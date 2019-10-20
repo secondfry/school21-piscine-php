@@ -20,6 +20,9 @@ class AShip
   private int    $_height   = 0;
   private int    $_rotation = 0;
 
+  const FLAT     = 1;
+  const VERTICAL = 2;
+
   private int $_locationX = 0;
   private int $_locationY = 0;
 
@@ -60,6 +63,7 @@ class AShip
     $this -> _locationY    = $y;
     $this -> _playerID     = $playerID;
     $this -> _id           = $id;
+    $this -> _rotation     = AShip::FLAT;
     $this -> reset();
   }
 
@@ -263,15 +267,34 @@ class AShip
   public
   function canMoveTo(
     int $x,
-    int $y
+    int $y,
+    GameField $field
   ): bool {
-    if ($this -> isOnXY($x, $y)) {
-      return false;
+    switch ($this -> _rotation) {
+      case AShip::FLAT:
+        var_dump($x - $this -> _locationX);
+        if (abs($x - $this -> _locationX) < $this -> _handling) {
+          return false;
+        }
+        break;
+      case AShip::VERTICAL:
+        if (abs($y - $this -> _locationY) < $this -> _handling) {
+          return false;
+        }
+        break;
     }
 
     $movementRequired =
       abs($x - $this -> _locationX + $y - $this -> _locationY);
     if ($movementRequired > $this -> _movementCur) {
+      return false;
+    }
+
+    if ($x > $field -> getWidth() - $this -> getWidth()) {
+      return false;
+    }
+
+    if ($y > $field -> getHeight() - $this -> getHeight()) {
       return false;
     }
 
@@ -281,9 +304,10 @@ class AShip
   public
   function moveTo(
     int $x,
-    int $y
+    int $y,
+    GameField $field
   ): bool {
-    if (!$this -> canMoveTo($x, $y)) {
+    if (!$this -> canMoveTo($x, $y, $field)) {
       return false;
     }
 
