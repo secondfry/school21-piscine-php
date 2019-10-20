@@ -1,15 +1,20 @@
 <?php
 
+use MongoDB\BSON\ObjectId;
+
 require_once __DIR__ . '/../interfaces/DBStorable.interface.php';
 require_once __DIR__ . '/../ships/AShip.class.php';
 
 class GameState implements ITurnBased, JsonSerializable
 {
 
+  private ObjectId $_id;
+
   const PHASE_SELECT_PLAYER = 1;
   const PHASE_SELECT_SHIP   = 2;
   const PHASE_USE_SHIP      = 3;
   const PHASE_RESET         = 4;
+  const PHASE_VICTORY       = 5;
 
   private int   $_phase = GameState::PHASE_SELECT_PLAYER;
 
@@ -19,37 +24,43 @@ class GameState implements ITurnBased, JsonSerializable
 
   private string $_status = '';
 
+  public
+  function __construct()
+  {
+    $this -> _id = new ObjectId();
+  }
+
+  public
+  function store(): void
+  {
+    MDB ::get() -> states -> updateOne(
+      [
+        '_id' => $this -> _id,
+      ],
+      [
+        '$set' => [
+          '_id'  => $this -> _id,
+          'data' => serialize($this)
+        ]
+      ],
+      ['upsert' => true]
+    );
+  }
+
   public static
   function recreate(
-    $data
-  ) {
-    $ret = new GameState();
-
-    $ret -> _phase           = $data['phase'];
-    $ret -> _currentPlayerID = $data['currentPlayerID'];
-    $ret -> _currentShipID   = $data['currentShipID'];
-    $ret -> _status          = $data['status'];
-
-    foreach ($data['players'] as $playerData) {
-      foreach ($playerData['ships'] as $shipData) {
-        // well
-        // we have to recreate object of exact class
-        // because we can't instantiate abstract AShip
-        // so we have to store ship type
-        // and it probably requires reflection
-        // so...
-        // FIXME it's broken Kevin
-      }
-    }
-
-    return $ret;
+    string $id
+  ): GameState {
+    $data  = MDB ::get() -> states -> findOne(['_id' => $id]);
+    $state = unserialize($data['data']);
+    return $state;
   }
 
   public
   function addPlayer(
     bool $setCurrent = false
   ): int {
-    $id                    = count($this -> _players) + 1;
+    $id                    = strval(count($this -> _players) + 1);
     $this -> _players[$id] = [
       'id'    => $id,
       'ships' => [],
@@ -69,10 +80,18 @@ class GameState implements ITurnBased, JsonSerializable
   }
 
   public
+  function setCurrentPlayerID(
+    int $val
+  ): GameState {
+    $this -> _currentPlayerID = $val;
+    return $this;
+  }
+
+  public
   function nextPlayer(): GameState
   {
     foreach ($this -> _players as $player) {
-      if ($player['id'] === $this -> _currentPlayerID) {
+      if ($player['id'] == $this -> _currentPlayerID) {
         continue;
       }
 
@@ -224,6 +243,76 @@ class GameState implements ITurnBased, JsonSerializable
       $ret['players'][] = $retP;
     }
     return $ret;
+  }
+
+  public
+  function checkVictory(): bool
+  {
+    foreach ($this -> _players as $player) {
+      $touched  = false;
+      $finished = true;
+
+      foreach ($player['ships'] as $ship) {
+        if (!$touched) {
+          $touched = true;
+        }
+
+        /** @var AShip $ship */
+        if ($ship -> getCurrentHull() > 0) {
+          $finished = false;
+          break;
+        }
+      }
+
+      if ($touched && $finished) {
+        $this -> _status = 'Победа, победа, вместо обеда...';
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkPlayers(): bool
+  {
+    foreach ($this -> _players as $player) {
+      if ($this -> checkPlayer($player)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkPlayer(
+    array $player = null
+  ) {
+    if (!$player) {
+      $player = $this -> _players[$this -> _currentPlayerID];
+
+    }
+
+    foreach ($player['ships'] as $ship) {
+      /** @var AShip $ship */
+      if ($ship -> hasActions()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  public
+  function checkShip(): bool
+  {
+    $ship = $this -> getCurrentShip();
+    if (!$ship) {
+      return false;
+    }
+
+    return $ship -> hasActions();
   }
 
 }

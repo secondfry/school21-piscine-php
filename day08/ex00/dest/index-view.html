@@ -10,15 +10,18 @@
   <link rel="stylesheet" href="/css/vue.min.css?2019092001">
   <link rel="stylesheet" href="/css/vue-desktop.min.css?2019092001" media="(min-width: 768px)">
 </head>
-<body>
+<body style="background: #333;">
 
-<router-view id="vue-root"></router-view>
+<a href="/list">Список игр</a><br>
+<a href="/create">Создать игру</a><br>
 
-<script>
-  if (localStorage.isDark === 'true') {
-    document.body.style.background = '#111';
-  }
-</script>
+<!--<router-view id="vue-root"></router-view>-->
+
+<!--<script>-->
+<!--  if (localStorage.isDark === 'true') {-->
+<!--    document.body.style.background = '#111';-->
+<!--  }-->
+<!--</script>-->
 <script src="https://cdn.jsdelivr.net/npm/axios@0.18.1/dist/axios.min.js"
         integrity="sha384-owFdg6U7OiCYoWoFsZTv3v6Ac2dp+XdyY7dxlhsW8ST+qnTPpS6iGI0NN2yn1HLK"
         crossorigin="anonymous"></script>

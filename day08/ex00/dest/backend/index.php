@@ -62,88 +62,125 @@ $errorMiddleware = $app -> addErrorMiddleware(true, true, true);
 $errorMiddleware -> setDefaultErrorHandler($customErrorHandler);
 
 $app -> get(
-  '/',
+  '/list',
   function (Request $request, Response $response, array $args) {
-    $html = file_get_contents(__DIR__ . '/../index-view.html');
-    $response -> getBody() -> write($html);
+    $ret = '';
+
+    $ret .= GameField::HEADER;
+    $ret .= '<div class="px-1">';
+    $ret .= GameField::NAVIGATION;
+
+    $allGamesData = MDB ::get() -> games -> find(['status' => 'active']);
+    foreach ($allGamesData as $gameData) {
+      $ret .= sprintf(
+        '<a href="/play/%s">%s</a><br>',
+        $gameData['_id'],
+        $gameData['_id']
+      );
+    }
+
+    $ret .= '</div>';
+
+    $response -> getBody() -> write($ret);
     return $response;
   }
 );
 
 $app -> get(
-  '/api/create',
+  '/create',
   function (Request $request, Response $response, array $args) {
-    $session = new \SlimSession\Helper();
-
-    $game = Game::constructPreset();
-
-    $id =
-      MDB ::get() -> games -> insertOne(
-        $game -> jsonSerialize(),
-        ['upsert' => true]
-      ) -> getInsertedId();
-
-    $game = Game::recreate(['id' => $id]);
-
-    $response -> getBody() -> write(
-      json_encode(
-        [
-          'id'   => $id,
-          'game' => $game
-        ],
-        JSON_UNESCAPED_UNICODE
-      )
+    $game = Game ::constructPreset();
+    $game -> store();
+    $url = sprintf(
+      '/play/%s',
+      $game -> getID()
     );
+    return $response -> withHeader('Location', $url);
+  }
+);
 
+$app -> get(
+  '/play/{gameID:[0-9a-f]{24}}',
+  function (Request $request, Response $response, array $args) {
+    $game = Game ::recreate($args['gameID']);
+
+    while ($game -> play()) {
+    }
+    $game -> store();
+
+    $ret = $game -> getField() -> render($game, $game -> getState());
+    $response -> getBody() -> write($ret);
     return $response;
   }
 );
 
 $app -> get(
-  '/api/select/{shipID:[0-9]+}',
+  '/play/{gameID:[0-9a-f]{24}}/select/{shipID:[0-9]+}',
   function (Request $request, Response $response, array $args) {
-    $session = new \SlimSession\Helper();
-
-    /** @var Game $game */
-    $game = $session -> get('game');
+    $game = Game ::recreate($args['gameID']);
 
     $game -> selectShip(intval($args['shipID'], 10));
+    $game -> store();
 
-    return $response -> withHeader('Location', '/play');
+    $url = sprintf(
+      '/play/%s',
+      $game -> getID()
+    );
+    return $response -> withHeader('Location', $url);
   }
 );
 
 $app -> get(
-  '/api/move/{x:[0-9]+}/{y:[0-9]+}',
+  '/play/{gameID:[0-9a-f]{24}}/move/x/{x:[0-9]+}/y/{y:[0-9]+}',
   function (Request $request, Response $response, array $args) {
-    $session = new \SlimSession\Helper();
-
-    /** @var Game $game */
-    $game = $session -> get('game');
+    $game = Game ::recreate($args['gameID']);
 
     $game -> moveTo(
       intval($args['x'], 10),
       intval($args['y'], 10)
     );
+    $game -> store();
 
-    return $response -> withHeader('Location', '/play');
+    $url = sprintf(
+      '/play/%s',
+      $game -> getID()
+    );
+    return $response -> withHeader('Location', $url);
   }
 );
 
 $app -> get(
-  '/api/attack/{x:[0-9]+}/{y:[0-9]+}',
+  '/play/{gameID:[0-9a-f]{24}}/attack/x/{x:[0-9]+}/y/{y:[0-9]+}',
   function (Request $request, Response $response, array $args) {
-    $session = new \SlimSession\Helper();
-
-    /** @var Game $game */
-    $game = $session -> get('game');
+    $game = Game ::recreate($args['gameID']);
 
     $game -> attackAt(
       intval($args['x'], 10),
       intval($args['y'], 10)
     );
+    $game -> store();
 
-    return $response -> withHeader('Location', '/play');
+    $url = sprintf(
+      '/play/%s',
+      $game -> getID()
+    );
+    return $response -> withHeader('Location', $url);
+  }
+);
+
+$app -> get(
+  '/',
+  function (Request $request, Response $response, array $args) {
+    $ret = '';
+
+    $ret .= GameField::HEADER;
+    $ret .= '<div class="px-1">';
+    $ret .= GameField::NAVIGATION;
+    $ret .= '<p>Это пацанский лэндинг пейдж, бро!</p>';
+    $ret .= '</div>';
+
+    $response -> getBody() -> write($ret);
+    return $response;
   }
 );
 

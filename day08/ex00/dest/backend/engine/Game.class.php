@@ -12,6 +12,7 @@ class Game implements JsonSerializable, DBStorable
   private ObjectId  $_id;
   private GameField $_field;
   private GameState $_state;
+  private string    $_status;
   private           $_data;
 
   /**
@@ -71,48 +72,80 @@ class Game implements JsonSerializable, DBStorable
     $ret -> _field = new GameField();
     $ret -> _state = new GameState();
 
-    $pid  = $ret -> getState() -> addPlayer();
+    $pid  = $ret -> getState() -> addPlayer(true);
     $ship = new AmarrFrigate(1, $pid, 1, 1);
     $ret -> getState() -> addShip($ship);
 
-    $pid  = $ret -> getState() -> addPlayer();
+    $pid  = $ret -> getState() -> addPlayer(true);
     $ship = new AmarrFrigate(2, $pid, 5, 8);
     $ret -> getState() -> addShip($ship);
 
-    return $ret;
-  }
+    $ret -> getState() -> setCurrentPlayerID(0);
 
-  public static
-  function recreate(
-    $data
-  ): Game {
-    $ret = new Game();
-
-    $ret -> _id    = $data['id'];
-    $ret -> _field = $ret -> getField();
-    $ret -> _state = $ret -> getState();
+    $ret -> _id     = new ObjectId();
+    $ret -> _status = 'active';
 
     return $ret;
   }
 
   /**
+   * @return bool if it is needed to call this method again
    * @throws GameException in case $_id is not set
    */
   public
-  function play(): void
+  function play(): bool
   {
+    $isFinished = $this -> getState() -> checkVictory();
+    if ($isFinished) {
+      $this -> _status = 'finished';
+      $this -> getState() -> setPhase(GameState::PHASE_VICTORY);
+      $this -> store();
+      return false;
+    }
+
     switch ($this -> getState() -> getPhase()) {
       case GameState::PHASE_SELECT_PLAYER:
-        $this -> getState() -> nextPlayer();
-        $this -> getState() -> setPhase(GameState::PHASE_SELECT_SHIP);
-        break;
-      case GameState::PHASE_SELECT_SHIP:
+        if ($this -> getState() -> checkPlayers()) {
+          $this -> getState() -> nextPlayer();
+          $this -> getState() -> setPhase(GameState::PHASE_SELECT_SHIP);
+          return true;
+        }
 
-        break;
+        $this -> getState() -> setPhase(GameState::PHASE_RESET);
+        return true;
+
+      case GameState::PHASE_SELECT_SHIP:
+        if ($this -> getState() -> checkPlayer()) {
+          return false;
+        }
+
+        $this -> getState() -> setPhase(GameState::PHASE_SELECT_PLAYER);
+        return true;
+
+      case GameState::PHASE_USE_SHIP:
+        if ($this -> getState() -> checkShip()) {
+          return false;
+        }
+
+        $this -> getState() -> setPhase(GameState::PHASE_SELECT_SHIP);
+        return true;
+
       case GameState::PHASE_RESET:
         $this -> getState() -> reset();
-        break;
+        $this -> getState() -> setPhase(GameState::PHASE_SELECT_PLAYER);
+        return true;
     }
+
+    return false;
+  }
+
+  /**
+   * @return ObjectId
+   */
+  public
+  function getId(): ObjectId
+  {
+    return $this -> _id;
   }
 
   /**
@@ -181,6 +214,34 @@ class Game implements JsonSerializable, DBStorable
     );
   }
 
+  public
+  function store(): void
+  {
+    MDB ::get() -> games -> updateOne(
+      [
+        '_id' => $this -> _id,
+      ],
+      [
+        '$set' => [
+          '_id'    => $this -> _id,
+          'status' => $this -> _status,
+          'data'   => serialize($this)
+        ]
+      ],
+      ['upsert' => true]
+    );
+  }
+
+  public static
+  function recreate(
+    string $id
+  ): Game {
+    $objid = new ObjectId($id);
+    $data  = MDB ::get() -> games -> findOne(['_id' => $objid]);
+    $game  = unserialize($data['data']);
+    return $game;
+  }
+
   /**
    * @return array|mixed
    * @throws GameException in case $_id is not set
@@ -188,15 +249,12 @@ class Game implements JsonSerializable, DBStorable
   public
   function jsonSerialize()
   {
-    $ret = [
-      'field' => $this -> getField() -> jsonSerialize(),
-      'state' => $this -> getState() -> jsonSerialize(),
+    return [
+      '_id'    => $this -> _id,
+      'field'  => $this -> getField() -> jsonSerialize(),
+      'state'  => $this -> getState() -> jsonSerialize(),
+      'status' => $this -> _status,
     ];
-
-    if (isset($this -> _id)) {
-      $ret['id'] = $this -> _id;
-    }
-
-    return $ret;
   }
+
 }

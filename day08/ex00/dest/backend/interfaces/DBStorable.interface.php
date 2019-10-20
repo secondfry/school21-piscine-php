@@ -3,9 +3,12 @@
 interface DBStorable
 {
 
+  public
+  function store(): void;
+
   public static
   function recreate(
-    $data
+    string $id
   );
 
 }
