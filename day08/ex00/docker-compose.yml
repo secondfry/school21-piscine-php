@@ -1,0 +1,38 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: verynicepassword
+
+  php:
+    build: ../docker
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+     - .:/usr/src/myapp
+    working_dir: /usr/src/myapp/dest
+    environment:
+      MONGODB_ADMINUSERNAME: root
+      MONGODB_ADMINPASSWORD: verynicepassword
+    command: php -S 0.0.0.0:8000 -t . backend/index.php
+
+  composer:
+    build: ../docker
+    volumes:
+     - .:/usr/src/myapp
+    working_dir: /usr/src/myapp/dest/backend
+    command: bash -c "composer install; composer update"
+
+  npm:
+    image: node
+    volumes:
+     - .:/usr/src/myapp
+    working_dir: /usr/src/myapp
+    command: bash -c "npm install && npm run prod"
