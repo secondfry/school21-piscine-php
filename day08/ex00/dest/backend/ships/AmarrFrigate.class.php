@@ -5,6 +5,7 @@ require_once __DIR__ . '/../weapons/SmallPulseLaser.class.php';
 
 class AmarrFrigate extends AShip
 {
+
   public
   function __construct(
     $id,

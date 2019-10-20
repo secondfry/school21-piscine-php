@@ -68,7 +68,7 @@ class Game
     int $y
   ): void {
     $ship = $this -> _state -> getCurrentShip();
-    $ship -> moveTo($x, $y);
+    $ship -> moveTo($x, $y, $this -> _field);
     $this -> _state -> setStatus(
       sprintf(
         'Вы успешно перестили %s #%d',
@@ -83,8 +83,8 @@ class Game
     int $x,
     int $y
   ): void {
-    $ship = $this -> _state -> getCurrentShip();
-    $shipOther = $this->_state->getShipAtLocation($x, $y);
+    $ship      = $this -> _state -> getCurrentShip();
+    $shipOther = $this -> _state -> getShipAtLocation($x, $y);
 
     if (!$shipOther) {
       $this -> _state -> setStatus('Там нет корабля!');
