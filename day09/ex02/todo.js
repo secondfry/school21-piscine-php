@@ -41,13 +41,21 @@ const createTodo = (id, text) => {
   });
 };
 const parseTodos = () => {
-  const cookieTodos = document.cookie.split(';').filter(item => item.trim().startsWith('todos='));
-  if (!cookieTodos.length) {
+  const cookieArr = document.cookie.split(';');
+  const cookieArrReduced = cookieArr.reduce((acc, cur) => {
+    cur = cur.trim();
+    if (cur.startsWith('todos=')) {
+      acc.push(cur);
+    }
+    return acc;
+  }, []);
+
+  if (!cookieArrReduced.length) {
     todos = {};
     return;
   }
 
-  const data = cookieTodos[0].substr(6);
+  const data = cookieArrReduced[0].substr(6);
   if (data === '') {
     todos = {};
     return;
